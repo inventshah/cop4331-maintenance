@@ -41,10 +41,10 @@ public class ParseApp extends Application {
         query.findInBackground((list, e) -> {
             if (e == null) {
                 for(ParseObject o : list)
-                    Log.v("score",""+ o.getObjectId() + " " + o.get("name"));
-                Log.v("score", "Retrieved " + list.size() + " vehicles");
+                    Log.v("Object",""+ o.getObjectId() + " " + o.get("name"));
+                Log.v("Object", "Retrieved " + list.size() + " vehicles");
             } else {
-                Log.v("score", "Error: " + e.getMessage());
+                Log.v("Object", "Error: " + e.getMessage());
             }
         });
 
