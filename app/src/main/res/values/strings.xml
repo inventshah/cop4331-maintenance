@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MaintenanceApp</string>
+
+    <string name="back4app_server_url">https://parseapi.back4app.com/</string>
+
+    <!-- Paste BOTH strings as required -->
+    <string name="back4app_app_id">h2wW27U8lT9pggJdbkAT8QIvij62mwfZZtzUnz0t</string>
+    <string name="back4app_client_key">7vLh6X6nPbjPIaTfuFrwibIbAYqwu1JbC4p3CFgA</string>
+
+</resources>
