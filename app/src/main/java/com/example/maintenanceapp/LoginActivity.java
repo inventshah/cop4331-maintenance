@@ -59,7 +59,6 @@ public class LoginActivity extends AppCompatActivity {
             if(username.length() > 0 && password.length() > 0)
                 signup(username, password);
         });
-
     }
 
     public void login(String username, String password)
