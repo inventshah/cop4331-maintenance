@@ -67,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
         if(ParseUser.getCurrentUser() != null)
         {
             Log.i("Login", "Already logged in, log out to login to other account");
+            goMainActivity();
             return;
         }
 
@@ -89,6 +90,13 @@ public class LoginActivity extends AppCompatActivity {
         });
         editTextUsername.setText("");
         editTextPassword.setText("");
+        // Logged in successfully; navigates to MainActivity
+        goMainActivity();
+    }
+    private void goMainActivity() {
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
+        finish();
     }
 
     // General Signup template
