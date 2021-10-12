@@ -20,9 +20,9 @@ public class ParseApp extends Application {
         // Replace appId and clientKey with your own back4app account,
         // we'll try to set up locally if possible
         Parse.initialize(new Parse.Configuration.Builder(this)
-                .applicationId("h2wW27U8lT9pggJdbkAT8QIvij62mwfZZtzUnz0t")// replace me
-                .clientKey("7vLh6X6nPbjPIaTfuFrwibIbAYqwu1JbC4p3CFgA")// replace me
-                .server("https://parseapi.back4app.com")// keep me
+                .applicationId("cvtDgSteXYSOSjlmbqDbC4Z2j8BrGXWWkQlQMafC\n")
+                .clientKey("JqNQCSZXfurZcqhYZhMEcM9LGkSPtWpmOtEO2TzM")
+                .server("https://parseapi.back4app.com")
                 .build()
         );
 
