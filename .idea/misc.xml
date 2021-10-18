@@ -3,8 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Fernando/AndroidStudioProjects/MaintenanceApp/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.21927083333333333" />
+        <entry key="..\:/Users/Fernando/AndroidStudioProjects/MaintenanceApp/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.21927083333333333" />
+        <entry key="..\:/Users/Fernando/AndroidStudioProjects/MaintenanceApp/app/src/main/res/drawable/ic_baseline_post_add_24.xml" value="0.21927083333333333" />
+        <entry key="..\:/Users/Fernando/AndroidStudioProjects/MaintenanceApp/app/src/main/res/drawable/round_button.xml" value="0.26458333333333334" />
         <entry key="..\:/Users/Fernando/AndroidStudioProjects/MaintenanceApp/app/src/main/res/layout/activity_login.xml" value="0.2375" />
-        <entry key="..\:/Users/Fernando/AndroidStudioProjects/MaintenanceApp/app/src/main/res/layout/activity_main.xml" value="0.13020833333333334" />
+        <entry key="..\:/Users/Fernando/AndroidStudioProjects/MaintenanceApp/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/Fernando/AndroidStudioProjects/MaintenanceApp/app/src/main/res/layout/fragment_home.xml" value="0.5" />
+        <entry key="..\:/Users/Fernando/AndroidStudioProjects/MaintenanceApp/app/src/main/res/layout/fragment_profile.xml" value="0.2484375" />
+        <entry key="..\:/Users/Fernando/AndroidStudioProjects/MaintenanceApp/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.2484375" />
       </map>
     </option>
   </component>

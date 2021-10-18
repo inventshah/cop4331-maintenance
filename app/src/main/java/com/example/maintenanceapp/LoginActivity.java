@@ -1,12 +1,15 @@
 package com.example.maintenanceapp;
 import models.*;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.parse.ParseUser;
+
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -14,29 +17,23 @@ public class LoginActivity extends AppCompatActivity {
     private EditText editTextPassword;
     Button loginBtn;
     Button signupBtn;
-    Button logoutBtn; // this button is only temporary its only for testing, get rid of it later
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // this is temporary, bc we wont have a logout btn on the login page
-        logoutBtn = findViewById(R.id.LogOutBtn);
-        logoutBtn.setOnClickListener(view -> {
-            logout();
-        });
-
         // If user is already logged in
         if(ParseUser.getCurrentUser() != null)
         {
             Log.i("Current User", "Already logged in");
-            // go somewhere else
+            goMainActivity();
+
         }
 
 //        Seeds the database to have data to work with, and return to LoginActivity//
-        Intent intent = new Intent(this.getBaseContext(), Seeds.class);
-        startActivity(intent);
+        //Intent intent = new Intent(this.getBaseContext(), Seeds.class);
+        //startActivity(intent);
 
         // Extract info from the UI
         editTextUsername = findViewById(R.id.Username);
@@ -46,14 +43,12 @@ public class LoginActivity extends AppCompatActivity {
 
         // Set event listeners
         loginBtn.setOnClickListener(view -> {
-            Log.i("Login","clicked login btn");
             String username = editTextUsername.getText().toString();
             String password = editTextPassword.getText().toString();
             if(username.length() > 0 && password.length() > 0)
                 login(username, password);
         });
         signupBtn.setOnClickListener(view -> {
-            Log.i("Login","clicked signup btn");
             String username = editTextUsername.getText().toString();
             String password = editTextPassword.getText().toString();
             if(username.length() > 0 && password.length() > 0)
@@ -63,36 +58,30 @@ public class LoginActivity extends AppCompatActivity {
 
     public void login(String username, String password)
     {
-
-        if(ParseUser.getCurrentUser() != null)
-        {
-            Log.i("Login", "Already logged in, log out to login to other account");
-            goMainActivity();
-            return;
-        }
-
-        // 'e' is our exception object, 'user' is the user object
         ParseUser.logInInBackground(username, password, (user, e) -> {
 
             // Login success
-            if(user != null)
+            if(e == null)
             {
-                // make some UI Toast pop up animation on failure
-                // go somewhere else
+                Toast toast = Toast.makeText(getApplicationContext(), "Successfully Logged In",
+                        Toast.LENGTH_SHORT);
+                toast.show();
+                goMainActivity();
 
             }
             // Login failure
             else
             {
-                Log.i("Login Error", "login error" + e.toString());
-                // make some UI Toast pop up animation on success
+                Toast toast = Toast.makeText(getApplicationContext(), "Incorrect Username or Password",
+                        Toast.LENGTH_SHORT);
+                toast.show();
             }
         });
+
         editTextUsername.setText("");
         editTextPassword.setText("");
-        // Logged in successfully; navigates to MainActivity
-        goMainActivity();
     }
+
     private void goMainActivity() {
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
@@ -102,44 +91,32 @@ public class LoginActivity extends AppCompatActivity {
     // General Signup template
     public void signup(String username, String password)
     {
-        if(ParseUser.getCurrentUser() != null)
-        {
-            Log.i("Login", "Already logged in, cannot sign up again!");
-            return;
-        }
-
         ParseUser user = new ParseUser();
         user.setUsername(username);
         user.setPassword(password);
         user.signUpInBackground(e -> {
             if (e == null) {
 
-                Tenant t = new Tenant();
-                t.setUser(user); // references the user object in the user table
-                t.saveInBackground();
+                Tenant tenant = new Tenant();
+                tenant.setUser(user); // tenant object references its user object in the user table
+                tenant.saveInBackground();
 
-                // Set a field indicating what type of user, we use this field to indicate
-                // whether the user is Tenant, Handyman, etc
-
-                // As far telling what object the role is, we can just get the role object then do
-                // instanceof Tenant or instanceof Landlord etc.
-                user.put("role", t);
+                user.put("role", tenant); // sets the role field to be a reference to a Tenant Object in the Tenant table
                 user.saveInBackground();
-                Log.i("SignUp success", "sign up success");
+
+                // Note: each user can only have one role, i.e only a single reference to a Tenant,
+                // Landlord, or Handyman Object. And each of those role objects can only have one reference
+                // to a User.
+                Toast toast = Toast.makeText(getApplicationContext(), "Successfully Signed Up",
+                        Toast.LENGTH_SHORT);
+                toast.show();
+                goMainActivity();
 
             } else {
-                Log.i("SignUp err", "sign up err" + e.getMessage());
+                Toast toast = Toast.makeText(getApplicationContext(), "Failed Sign Up",
+                        Toast.LENGTH_SHORT);
+                toast.show();
             }
         });
-    }
-
-    // Temporary function: Logs out current user
-    public void logout()
-    {
-        ParseUser.logOut();
-        if(ParseUser.getCurrentUser() == null)
-            Log.i("Logout success", "logout success");
-        else
-            Log.i("Logout err", "logout err");
     }
 }
