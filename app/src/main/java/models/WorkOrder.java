@@ -9,7 +9,7 @@ public class WorkOrder extends ParseObject {
     public static final String KEY_TENANT = "tenant";
     public static final String KEY_LANDLORD = "landlord";
     public static final String KEY_HANDYMAN = "handyman";
-    public static final String KEY_PROPERTY = "property";
+    public static final String KEY_LOCATION = "location";
     public static final String KEY_TITLE = "title";
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_QUOTE = "quote";
@@ -34,9 +34,9 @@ public class WorkOrder extends ParseObject {
 
     public void setHandyman(Handyman handyman) { put(KEY_HANDYMAN, handyman); }
 
-    public Property getProperty() { return (Property)getParseObject(KEY_PROPERTY); }
+    public String getLocation() { return getString(KEY_LOCATION); }
 
-    public void setProperty(Property property) { put(KEY_PROPERTY, property); }
+    public void setLocation(String location) { put(KEY_LOCATION, location); }
 
     public String getTitle() { return getString(KEY_TITLE); }
 
@@ -44,7 +44,7 @@ public class WorkOrder extends ParseObject {
 
     public String getDescription() { return getString(KEY_DESCRIPTION); }
 
-    public void setDescription(String description) { put(KEY_HANDYMAN, description); }
+    public void setDescription(String description) { put(KEY_DESCRIPTION, description); }
 
     public double getQuote() { return getDouble(KEY_QUOTE); }
 

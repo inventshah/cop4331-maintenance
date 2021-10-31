@@ -5,16 +5,19 @@ import com.parse.ParseUser;
 
 import java.util.List;
 
+
+
 @ParseClassName("Tenant")
 public class Tenant extends ParseObject {
 
     public static final String KEY_USER = "user";
-    public static final String KEY_NAME = "name";
-    public static final String KEY_POINTS = "points";
-    public static final String KEY_PROPERTIES = "properties";
+    public static final String KEY_LANDLORD = "landlord";
+    public static final String KEY_SUBMITTEDWORKORDERS = "submittedWorkOrders";
 
+    // // TODO finish this method
     // Schema Validator, checks if all properties are non-empty/ correct for database insertion
-    public boolean validateTenant() {
+    public boolean validateTenant(String title, String description, String location, Tenant tenant,
+                                  Landlord landlord) {
         return true;
     }
 
@@ -22,16 +25,45 @@ public class Tenant extends ParseObject {
 
     public void setUser(ParseUser user) { put(KEY_USER, user); }
 
-    public String getName() { return getString(KEY_NAME); }
+    public List<WorkOrder> getSubmittedWorkOrders(){ return getList(KEY_SUBMITTEDWORKORDERS);}
 
-    public void setName(String name) { super.put(KEY_NAME, name); }
+    public void setSubmittedWorkOrders(List<WorkOrder> list){ put(KEY_SUBMITTEDWORKORDERS, list);}
 
-    public int getPoints() { return getInt(KEY_POINTS); }
+    // TODO finish this method
+    public boolean createWorkOrder(String title, String description, String location, Tenant tenant,
+                                    Landlord landlord) {
 
-    public void setPoints(int points) { super.put(KEY_POINTS, points); }
+        // Don't set other properties yet, leave them undefined until set  workorder is resolved
+        // or given a quote, etc
 
-    public List<Property> getProperties() { return getList(KEY_PROPERTIES); }
+        // if(workorder is invalid)
+        //    return false;
+        WorkOrder workOrder = new WorkOrder();
+        workOrder.setTitle(title);
+        workOrder.setDescription(description);
+        workOrder.setLocation(location);
+        workOrder.setTenant(tenant);
+        workOrder.setLandlord(landlord);
+        workOrder.setStatus(false);
+        workOrder.saveInBackground();
+        return true;
+    }
+    public void removeWorkOrder(int index){
+        // TODO: Run a query to delete, then save list
+        // perhaps this will work, all of this in here is tentative
+        List<WorkOrder> list = getSubmittedWorkOrders();
+        WorkOrder workOrder = list.get(index);
 
-    public void setProperties(List<Property> list) { super.put(KEY_PROPERTIES, list); }
+        // remove reference from tenant
+        list.remove(index);
+        setSubmittedWorkOrders(list);
+
+        // remove from server
+        workOrder.deleteInBackground();
+    }
+
+    public Landlord getLandlord() { return (Landlord) getParseObject(KEY_LANDLORD); }
+
+    public void setLandlord(Landlord landlord) { put(KEY_LANDLORD, landlord); }
 
 }

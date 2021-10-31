@@ -10,6 +10,7 @@ public class Handyman extends ParseObject {
 
     public static final String KEY_USER = "user";
     public static final String KEY_RESOLVEDWORKORDERS = "resolvedworkorders";
+    public static final String KEY_LANDLORD = "landlord";
 
     // Schema Validator, checks if all properties are non-empty/ correct for database insertion
     public boolean validateHandyman() {
@@ -20,8 +21,12 @@ public class Handyman extends ParseObject {
 
     public void setUser(ParseUser user) { put(KEY_USER, user); }
 
-    public List<WorkOrder> getResolveWorkOrders() {return getList(KEY_RESOLVEDWORKORDERS); }
+    public List<WorkOrder> getResolvedWorkOrders() {return getList(KEY_RESOLVEDWORKORDERS); }
 
     public void setResolvedWorkOrders(List<WorkOrder> list) { put(KEY_RESOLVEDWORKORDERS, list); }
+
+    public Landlord getLandlord(){return (Landlord) getParseObject(KEY_LANDLORD);}
+
+    public void setLandlord(Landlord landlord){put(KEY_LANDLORD, landlord);}
 
 }

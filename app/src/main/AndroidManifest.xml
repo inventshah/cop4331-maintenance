@@ -16,7 +16,7 @@
         android:name="com.parse.CLIENT_KEY"
         android:value="@string/back4app_client_key" />
 
-    <!-- ParseApp is called on start up -->
+    <!-- ParseApp.java is called on start up -->
     <application
         android:name=".ParseApp"
         android:usesCleartextTraffic="true"
@@ -25,7 +25,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MaintenanceApp">
+
+        android:theme="@style/Theme.MaintenanceApp"
+
+        >
+
         <!-- Set login activity as the activity that gets called on startup with intent filter tag -->
         <activity
             android:name=".LoginActivity"
@@ -36,8 +40,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity"/>
+        <activity android:name=".NewWorkOrderActivity"/>
         <activity android:name=".Seeds" />
-
+        <activity android:name=".SignUpActivity"/>
     </application>
 
 </manifest>

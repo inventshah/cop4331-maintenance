@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign Up"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:textSize="10pt"/>
+
+    <RadioGroup
+        android:id="@+id/radioRole"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp">
+
+
+        <RadioButton
+            android:id="@+id/radioTenant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Tenant" />
+
+        <RadioButton
+            android:id="@+id/radioLandlord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Landlord" />
+
+        <RadioButton
+            android:id="@+id/radioHandyman"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Handyman" />
+
+    </RadioGroup>
+
+
+    <EditText
+        android:id="@+id/textName"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="275dp"
+        android:hint="Full Name" />
+
+    <EditText
+        android:id="@+id/textUsername"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="325dp"
+        android:hint="Username" />
+
+    <EditText
+        android:id="@+id/textPassword"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="375dp"
+        android:layout_centerHorizontal="true"
+        android:hint="Password"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/landlordKey"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:hint="LandLord Key"
+        android:inputType="textPassword"
+        android:layout_marginTop="425dp"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:id="@+id/btnSignup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Signup"
+        android:layout_marginTop="525dp"
+        android:layout_centerHorizontal="true"/>
+
+
+
+</RelativeLayout>
+
+
+
+
+
+
+
+

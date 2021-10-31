@@ -3,7 +3,10 @@ import android.os.Bundle;
 import android.util.Log;
 import models.*;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 // This is a seed activity, we can modify it to insert data so we have data to work with
 public class Seeds extends AppCompatActivity {
@@ -12,7 +15,15 @@ public class Seeds extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        Log.v("Seeds","Inside the seeds activity");
+
+        finish();
+    }
+    public void insert()
+    {
+
+    }
+    public void query()
+    {
 
         // Note: if we are going to access the User Class put "_User" as the getQuery() param
         ParseQuery<WorkOrder> query = ParseQuery.getQuery(WorkOrder.class);
@@ -33,15 +44,13 @@ public class Seeds extends AppCompatActivity {
                     if(wo.getTenant() == null)
                         continue;
                     Tenant t = wo.getTenant();
-                    Log.i("Tenant", "got tenant in work order " + t.toString() + " " + t.getObjectId() + " " + t.getName());
+                    Log.i("Tenant", "got tenant in work order " + t.toString() + " " + t.getObjectId());
                 }
             }
             else{
                 Log.i("Error", e.getMessage());
             }
         });
-
-        finish();
     }
 
 }

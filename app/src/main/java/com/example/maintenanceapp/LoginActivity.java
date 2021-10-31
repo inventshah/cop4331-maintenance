@@ -8,6 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.parse.Parse;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 
@@ -25,15 +28,11 @@ public class LoginActivity extends AppCompatActivity {
 
         // If user is already logged in
         if(ParseUser.getCurrentUser() != null)
-        {
-            Log.i("Current User", "Already logged in");
             goMainActivity();
 
-        }
-
 //        Seeds the database to have data to work with, and return to LoginActivity//
-        //Intent intent = new Intent(this.getBaseContext(), Seeds.class);
-        //startActivity(intent);
+//        Intent intent = new Intent(this.getBaseContext(), Seeds.class);
+//        startActivity(intent);
 
         // Extract info from the UI
         editTextUsername = findViewById(R.id.Username);
@@ -49,27 +48,21 @@ public class LoginActivity extends AppCompatActivity {
                 login(username, password);
         });
         signupBtn.setOnClickListener(view -> {
-            String username = editTextUsername.getText().toString();
-            String password = editTextPassword.getText().toString();
-            if(username.length() > 0 && password.length() > 0)
-                signup(username, password);
+            Intent intent = new Intent(this, SignUpActivity.class);
+            startActivity(intent);
         });
     }
 
     public void login(String username, String password)
     {
         ParseUser.logInInBackground(username, password, (user, e) -> {
-
-            // Login success
             if(e == null)
             {
-                Toast toast = Toast.makeText(getApplicationContext(), "Successfully Logged In",
+                Toast toast = Toast.makeText(getApplicationContext(), "Welcome Back " + user.get("name"),
                         Toast.LENGTH_SHORT);
                 toast.show();
                 goMainActivity();
-
             }
-            // Login failure
             else
             {
                 Toast toast = Toast.makeText(getApplicationContext(), "Incorrect Username or Password",
@@ -83,40 +76,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void goMainActivity() {
-        Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
         finish();
-    }
-
-    // General Signup template
-    public void signup(String username, String password)
-    {
-        ParseUser user = new ParseUser();
-        user.setUsername(username);
-        user.setPassword(password);
-        user.signUpInBackground(e -> {
-            if (e == null) {
-
-                Tenant tenant = new Tenant();
-                tenant.setUser(user); // tenant object references its user object in the user table
-                tenant.saveInBackground();
-
-                user.put("role", tenant); // sets the role field to be a reference to a Tenant Object in the Tenant table
-                user.saveInBackground();
-
-                // Note: each user can only have one role, i.e only a single reference to a Tenant,
-                // Landlord, or Handyman Object. And each of those role objects can only have one reference
-                // to a User.
-                Toast toast = Toast.makeText(getApplicationContext(), "Successfully Signed Up",
-                        Toast.LENGTH_SHORT);
-                toast.show();
-                goMainActivity();
-
-            } else {
-                Toast toast = Toast.makeText(getApplicationContext(), "Failed Sign Up",
-                        Toast.LENGTH_SHORT);
-                toast.show();
-            }
-        });
     }
 }

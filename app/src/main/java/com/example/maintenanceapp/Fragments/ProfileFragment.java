@@ -31,7 +31,6 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         LogOutBtn = view.findViewById(R.id.LogOutBtn);
 
         LogOutBtn.setOnClickListener(new View.OnClickListener() {
@@ -47,13 +46,11 @@ public class ProfileFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false);
