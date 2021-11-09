@@ -1,8 +1,10 @@
 package models;
 import com.parse.ParseClassName;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import java.io.File;
 import java.util.List;
 
 
@@ -31,7 +33,7 @@ public class Tenant extends ParseObject {
 
     // TODO finish this method
     public boolean createWorkOrder(String title, String description, String location, Tenant tenant,
-                                    Landlord landlord) {
+                                    Landlord landlord, File photoFile) {
 
         // Don't set other properties yet, leave them undefined until set  workorder is resolved
         // or given a quote, etc
@@ -45,7 +47,9 @@ public class Tenant extends ParseObject {
         workOrder.setTenant(tenant);
         workOrder.setLandlord(landlord);
         workOrder.setStatus(false);
+        workOrder.setAttachment(new ParseFile(photoFile));
         workOrder.saveInBackground();
+
         return true;
     }
     public void removeWorkOrder(int index){
