@@ -16,13 +16,18 @@ import android.widget.Button;
 
 import com.example.maintenanceapp.LoginActivity;
 import com.example.maintenanceapp.R;
+import com.example.maintenanceapp.RegisterLandlordActivity;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
+
+import models.Handyman;
 
 
 public class ProfileFragment extends Fragment {
 
-    Button LogOutBtn;
-
+    ParseObject role;
+    Button logout;
+    Button registerLandlord;
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -31,16 +36,25 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        LogOutBtn = view.findViewById(R.id.LogOutBtn);
+        role = (ParseObject) this.getActivity().getIntent().getExtras().get("role");
+        registerLandlord = view.findViewById(R.id.btnRegisterLandlord);
+        registerLandlord.setVisibility(!(role instanceof Handyman) ? View.INVISIBLE: View.VISIBLE);
+        logout = view.findViewById(R.id.btnLogout);
 
-        LogOutBtn.setOnClickListener(new View.OnClickListener() {
+        registerLandlord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), RegisterLandlordActivity.class);
+                intent.putExtra("role", role);
+                startActivity(intent);
+            }
+        });
+        logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ParseUser.logOut();
-                if(ParseUser.getCurrentUser() == null)
-                    Log.i("Logout success", "logout success");
-                else
-                    Log.i("Logout err", "logout err");
+                if(ParseUser.getCurrentUser() != null)
+                   Log.e("Logout Error", "logout err");
 
                 Intent intent = new Intent(getContext(), LoginActivity.class);
                 startActivity(intent);

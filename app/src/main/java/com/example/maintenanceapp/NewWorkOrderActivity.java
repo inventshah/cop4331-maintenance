@@ -25,8 +25,11 @@ import java.util.ArrayList;
 import java.util.List;
 import models.*;
 
+// TODO: fix btn visibility
+
 public class NewWorkOrderActivity extends AppCompatActivity
 {
+    ParseObject role;
     Toast toast;
     Button submitBtn;
     EditText editTextDescription;
@@ -45,6 +48,7 @@ public class NewWorkOrderActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newworkorder);
 
+        role = (ParseObject) getIntent().getExtras().get("role");
         editTextDescription = findViewById(R.id.etDescription);
         ivWorkOrderImage = findViewById(R.id.ivImagePreview);
         editTextTitle = findViewById(R.id.etTitle);
@@ -58,7 +62,6 @@ public class NewWorkOrderActivity extends AppCompatActivity
             }
         });
         submitBtn.setOnClickListener(view -> {
-
             String description = editTextDescription.getText().toString();
             String location = editTextLocation.getText().toString();
             String title = editTextTitle.getText().toString();
@@ -68,22 +71,15 @@ public class NewWorkOrderActivity extends AppCompatActivity
 
     public void submitWorkOrder(String description, String location, String title) {
 
-        List<ParseObject> role = (ArrayList<ParseObject>) ParseUser.getCurrentUser().get("role");
+        Tenant tenant = (Tenant) role;
 
-        try{
-            Tenant tenant = (Tenant) role.get(0).fetchIfNeeded();
+        if(tenant.createWorkOrder(title, description, location, tenant, tenant.getLandlord(), photoFile))
+            toast = Toast.makeText(getBaseContext(), "Successful Submission", Toast.LENGTH_SHORT);
+        else
+            toast = Toast.makeText(getBaseContext(), "Failed Submission", Toast.LENGTH_SHORT);
 
-            if(tenant.createWorkOrder(title, description, location, tenant, tenant.getLandlord(), photoFile))
-                toast = Toast.makeText(getBaseContext(), "Successful Submission", Toast.LENGTH_SHORT);
-            else
-                toast = Toast.makeText(getBaseContext(), "Failed Submission", Toast.LENGTH_SHORT);
-
-            toast.show();
-            finish();
-
-        }catch (ParseException e){
-            Log.e("Error" ,e.getMessage());
-        }
+        toast.show();
+        finish();
     }
 
     public void launchCamera(View view) {
@@ -128,6 +124,9 @@ public class NewWorkOrderActivity extends AppCompatActivity
                 Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
                 // Load the taken image into a preview
                 ivWorkOrderImage.setImageBitmap(takenImage);
+                ivWorkOrderImage.setMaxHeight(200);
+                ivWorkOrderImage.setMaxWidth(150);
+
             } else { // Result was a failure
                 Toast.makeText(getApplicationContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }

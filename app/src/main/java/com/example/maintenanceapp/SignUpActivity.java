@@ -18,6 +18,8 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 import org.mindrot.jbcrypt.BCrypt;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 import models.Handyman;
@@ -53,7 +55,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 int selection = radioGroupRole.getCheckedRadioButtonId();
-                editTextLandlordKey.setVisibility(selection == R.id.radioLandlord ? View.INVISIBLE : View.VISIBLE);
+                editTextLandlordKey.setVisibility(selection == R.id.radioTenant ? View.VISIBLE : View.INVISIBLE);
             }
         });
         signupBtn.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +69,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                 // Check for empty fields
                 if(name.length() > 0 && username.length() > 0 && password.length() > 0 &&
-                     (id == R.id.radioTenant ? landlordKey.length() > 0 : id != R.id.radioHandyman || landlordKey.length() > 0)
+                     (id != R.id.radioTenant || landlordKey.length() > 0)
                   )
                     signup(name, username, password, landlordKey, id);
                 else
@@ -143,46 +145,28 @@ public class SignUpActivity extends AppCompatActivity {
         // If selection is handyman
         else
         {
-            // Create and initialize a Handyman and then create a ParseUser to associate with Handyman
-            ParseQuery<Landlord> query = ParseQuery.getQuery(Landlord.class);
-            query.whereEqualTo("landlordKey", landlordKey);
-            query.getFirstInBackground(new GetCallback<Landlord>() {
+            // Create and initialize a Handyman
+            Handyman handyman = new Handyman();
+            handyman.setResolvedWorkOrders(new ArrayList<>());
+            handyman.setLandlords(new ArrayList<>());
+            handyman.saveInBackground(new SaveCallback() {
                 @Override
-                public void done(Landlord l, ParseException e) {
-                    if (e == null && l != null)
+                public void done(ParseException e) {
+                    if(e == null)
                     {
-                        Handyman handyman = new Handyman();
-                        handyman.setResolvedWorkOrders(new ArrayList<>());
-                        handyman.setLandlord(l);
-                        handyman.saveInBackground(new SaveCallback() {
-                            @Override
-                            public void done(ParseException e) {
-                                if(e == null)
-                                {
-                                    role.add(handyman);
-                                    finishSignup(role, name, username, password);
-                                }
-                                else
-                                    Log.e("Error", e.getMessage());
-                            }
-                        });
+                        role.add(handyman);
+                        finishSignup(role, name, username, password);
                     }
                     else
-                    {
-                        Log.e("Error", e.getMessage() != null ? e.getMessage() : "LandlordKey does not match");
-                        e.getMessage();
-                        Toast toast = Toast.makeText(getApplicationContext(),
-                                "Failed Signed Up Landlord Key does not match",
-                                Toast.LENGTH_SHORT);
-                        toast.show();
-                    }
+                        Log.e("Error", e.getMessage());
                 }
             });
         }
     }
 
-    private void goMainActivity() {
+    private void goMainActivity(ParseObject role) {
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("role", role);
         startActivity(intent);
         finish();
     }
@@ -208,11 +192,15 @@ public class SignUpActivity extends AppCompatActivity {
                 if(e == null)
                 {
                     role.get(0).put("user", user);
-                    user.saveInBackground();
-                    Toast toast = Toast.makeText(getApplicationContext(), "Successfully Signed Up",
-                            Toast.LENGTH_SHORT);
-                    toast.show();
-                    goMainActivity();
+                    user.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            Toast toast = Toast.makeText(getApplicationContext(), "Successfully Signed Up",
+                                    Toast.LENGTH_SHORT);
+                            toast.show();
+                            goMainActivity(role.get(0));
+                        }
+                    });
                 }
                 else
                     Log.e("Error", e.getMessage());

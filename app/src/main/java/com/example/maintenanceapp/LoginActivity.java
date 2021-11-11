@@ -9,9 +9,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.parse.GetCallback;
 import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+
+import java.util.List;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -77,7 +81,15 @@ public class LoginActivity extends AppCompatActivity {
 
     private void goMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
+        List<ParseObject> res = (List<ParseObject>) ParseUser.getCurrentUser().get("role");
+        res.get(0).fetchInBackground(new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject object, ParseException e) {
+                intent.putExtra("role", res.get(0));
+                startActivity(intent);
+                finish();
+            }
+        });
+
     }
 }

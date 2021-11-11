@@ -15,8 +15,9 @@
             android:layout_width="45dp"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
-            android:background="@drawable/rectangle_button"
-            android:foreground="@drawable/ic_baseline_post_add_24"
+
+            android:background="@drawable/ic_baseline_post_add_24"
+            android:foreground="?android:attr/selectableItemBackground"
             app:backgroundTint="@null" />
 
     </RelativeLayout>
