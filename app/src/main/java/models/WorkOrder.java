@@ -21,7 +21,6 @@ public class WorkOrder extends ParseObject {
     public static final String KEY_RATING = "rating";
     public static final String KEY_STATUS = "status";
     public static final String KEY_ATTACHMENT = "attachment"; // image attachment
-    public static final String KEY_AVAILABLEQUOTES = "availableQuotes";
 
     // check if work order is valid, handyman can be null
     public boolean validateWorkOrder(){
@@ -72,9 +71,7 @@ public class WorkOrder extends ParseObject {
 
     public void setAttachment(ParseFile attachment) { put(KEY_ATTACHMENT, attachment); }
 
-    public List<Pair<Double, String>> getAvailableQuotes() { return getList(KEY_AVAILABLEQUOTES); }
 
-    public void setAvailableQuotes(List<Pair<Double, String>> list) { put(KEY_AVAILABLEQUOTES, list); }
 
 
 

@@ -53,11 +53,7 @@ public class Tenant extends ParseObject {
         workOrder.setLandlord(landlord);
         workOrder.setStatus(false);
         workOrder.setAttachment(new ParseFile(photoFile));
-        workOrder.setAvailableQuotes(new ArrayList<>());
-        Pair<Double, String> pair = new Pair<>(1.0, "someid");
-        List<Pair<Double, String>> list = workOrder.getAvailableQuotes();
-        list.add(pair);
-        workOrder.setAvailableQuotes(list);
+        workOrder.setQuotes(new ArrayList<>());
         workOrder.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
