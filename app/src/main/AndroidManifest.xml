@@ -57,6 +57,7 @@
         <activity android:name=".Seeds" />
         <activity android:name=".SignUpActivity"/>
         <activity android:name=".RegisterLandlordActivity"/>
+        <activity android:name=".ShowWorkOrderActivity"/>
     </application>
 
 </manifest>

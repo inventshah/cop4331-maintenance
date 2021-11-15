@@ -3,6 +3,7 @@ package com.example.maintenanceapp;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,12 +32,14 @@ import models.WorkOrder;
 
 public class WorkOrderAdapter extends RecyclerView.Adapter<WorkOrderAdapter.ViewHolder> {
 
-    Context context;
+    public Context context;
+    public ParseObject role;
     private List<WorkOrder> workorders;
 
-    public WorkOrderAdapter(Context context, List<WorkOrder> workorders) {
+    public WorkOrderAdapter(Context context, List<WorkOrder> workorders, ParseObject role) {
         this.context = context;
         this.workorders = workorders;
+        this.role = role;
     }
 
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -46,7 +49,7 @@ public class WorkOrderAdapter extends RecyclerView.Adapter<WorkOrderAdapter.View
     @Override
     public void onBindViewHolder(WorkOrderAdapter.ViewHolder holder, int position) {
         WorkOrder workOrder = workorders.get(position);
-        holder.bind(workOrder);
+        holder.bind(workOrder, this.role, context);
     }
 
     @Override
@@ -69,10 +72,9 @@ public class WorkOrderAdapter extends RecyclerView.Adapter<WorkOrderAdapter.View
             tvStatus = itemView.findViewById(R.id.tvStatus);
             btnDeleteWorkOrder = itemView.findViewById(R.id.btnDeleteWorkOrder);
             btnMoreInfo = itemView.findViewById(R.id.btnMoreInfo);
-
         }
 
-        public void bind(WorkOrder workOrder) {
+        public void bind(WorkOrder workOrder, ParseObject role, Context context) {
             tvTitle.setText(workOrder.getTitle());
             tvStatus.setText(workOrder.getStatus() ? "true" : "false");
 
@@ -112,6 +114,15 @@ public class WorkOrderAdapter extends RecyclerView.Adapter<WorkOrderAdapter.View
                             alert.show();
                         }
                     });
+                }
+            });
+            btnMoreInfo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(MainActivity.bottomNavigationView.getContext(), ShowWorkOrderActivity.class);
+                    intent.putExtra("workOrder", workOrder);
+                    intent.putExtra("role", role);
+                    context.startActivity(intent);
                 }
             });
 

@@ -59,7 +59,7 @@ public class HomeFragment extends Fragment {
         role = (ParseObject) this.getActivity().getIntent().getExtras().get("role");
         rvWorkOrders = view.findViewById(R.id.rvWorkorders);
         allWorkOrders = new LinkedList<>();
-        adapter = new WorkOrderAdapter(getContext(), allWorkOrders);
+        adapter = new WorkOrderAdapter(getContext(), allWorkOrders, role);
         rvWorkOrders.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL, false));
         rvWorkOrders.setAdapter(adapter);
         newWorkOrderBtn = view.findViewById(R.id.newWorkOrderBtn);

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/detailedWO_tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Title"/>
+    <ImageView
+        android:id="@+id/detailedWO_ivImage"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:background="@drawable/ic_baseline_image_24"
+        android:layout_below="@id/detailedWO_tvTitle"
+        android:layout_centerHorizontal="true"/>
+    <TextView
+        android:id="@+id/detailedWO_tvLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/detailedWO_ivImage"
+        android:text="location"/>
+    <TextView
+        android:id="@+id/detailedWO_tvDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/detailedWO_tvLocation"
+        android:text="description"
+        />
+    <TextView
+        android:id="@+id/detailedWO_tvStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/detailedWO_tvDescription"
+        android:text="status"/>
+    <Button
+        android:id="@+id/detailedWO_btnGeneric"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="button"
+        android:layout_below="@id/detailedWO_tvStatus"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible"/>
+
+
+
+
+
+</RelativeLayout>

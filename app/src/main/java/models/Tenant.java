@@ -1,12 +1,17 @@
 package models;
+import android.util.Log;
+import android.util.Pair;
+
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
-
 
 
 @ParseClassName("Tenant")
@@ -48,7 +53,18 @@ public class Tenant extends ParseObject {
         workOrder.setLandlord(landlord);
         workOrder.setStatus(false);
         workOrder.setAttachment(new ParseFile(photoFile));
-        workOrder.saveInBackground();
+        workOrder.setAvailableQuotes(new ArrayList<>());
+        Pair<Double, String> pair = new Pair<>(1.0, "someid");
+        List<Pair<Double, String>> list = workOrder.getAvailableQuotes();
+        list.add(pair);
+        workOrder.setAvailableQuotes(list);
+        workOrder.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e != null)
+                    Log.e("Error", e.getMessage());
+            }
+        });
 
         return true;
     }

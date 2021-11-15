@@ -1,7 +1,11 @@
 package models;
+import android.util.Pair;
+
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+
+import java.util.List;
 
 @ParseClassName("WorkOrder")
 public class WorkOrder extends ParseObject {
@@ -12,10 +16,12 @@ public class WorkOrder extends ParseObject {
     public static final String KEY_LOCATION = "location";
     public static final String KEY_TITLE = "title";
     public static final String KEY_DESCRIPTION = "description";
-    public static final String KEY_QUOTE = "quote";
+    public static final String KEY_QUOTES = "quotes";
+    public static final String KEY_FINALQUOTE = "finalQuote";
     public static final String KEY_RATING = "rating";
     public static final String KEY_STATUS = "status";
     public static final String KEY_ATTACHMENT = "attachment"; // image attachment
+    public static final String KEY_AVAILABLEQUOTES = "availableQuotes";
 
     // check if work order is valid, handyman can be null
     public boolean validateWorkOrder(){
@@ -46,9 +52,13 @@ public class WorkOrder extends ParseObject {
 
     public void setDescription(String description) { put(KEY_DESCRIPTION, description); }
 
-    public double getQuote() { return getDouble(KEY_QUOTE); }
+    public List<Quote> getQuotes() { return (List<Quote>) getParseObject(KEY_QUOTES); }
 
-    public void setQuote(double quote) { put(KEY_QUOTE, quote); }
+    public void setQuotes(List<Quote> quotes) { put(KEY_QUOTES, quotes); }
+
+    public Quote getFinalQuote() { return (Quote) getParseObject(KEY_FINALQUOTE); }
+
+    public void setFinalQuote(Quote quote) { put(KEY_FINALQUOTE, quote); }
 
     public int getRating() { return getInt(KEY_RATING); }
 
@@ -61,6 +71,12 @@ public class WorkOrder extends ParseObject {
     public ParseFile getAttachment() { return getParseFile(KEY_ATTACHMENT); }
 
     public void setAttachment(ParseFile attachment) { put(KEY_ATTACHMENT, attachment); }
+
+    public List<Pair<Double, String>> getAvailableQuotes() { return getList(KEY_AVAILABLEQUOTES); }
+
+    public void setAvailableQuotes(List<Pair<Double, String>> list) { put(KEY_AVAILABLEQUOTES, list); }
+
+
 
 }
 
