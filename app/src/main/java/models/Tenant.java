@@ -54,6 +54,7 @@ public class Tenant extends ParseObject {
         workOrder.setStatus(false);
         workOrder.setAttachment(new ParseFile(photoFile));
         workOrder.setQuotes(new ArrayList<>());
+        workOrder.setRating(0);
         workOrder.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {

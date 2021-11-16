@@ -30,10 +30,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // If user is already logged in
-        if(ParseUser.getCurrentUser() != null)
-            goMainActivity();
-
 //        Seeds the database to have data to work with, and return to LoginActivity//
 //        Intent intent = new Intent(this.getBaseContext(), Seeds.class);
 //        startActivity(intent);

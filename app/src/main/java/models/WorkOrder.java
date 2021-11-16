@@ -5,6 +5,7 @@ import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @ParseClassName("WorkOrder")
@@ -51,7 +52,7 @@ public class WorkOrder extends ParseObject {
 
     public void setDescription(String description) { put(KEY_DESCRIPTION, description); }
 
-    public List<Quote> getQuotes() { return (List<Quote>) getParseObject(KEY_QUOTES); }
+    public List<Quote> getQuotes() { return getList(KEY_QUOTES); }
 
     public void setQuotes(List<Quote> quotes) { put(KEY_QUOTES, quotes); }
 

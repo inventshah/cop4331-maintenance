@@ -18,13 +18,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         final FragmentManager fragmentManager = getSupportFragmentManager();
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             // Navigate to selected fragment
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
+
                 Fragment fragment;
                 switch (item.getItemId()) {
                     case R.id.action_profile:
@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
                 fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commitAllowingStateLoss();
                 return true;
             }
+
         });
 
         // Set default selection
