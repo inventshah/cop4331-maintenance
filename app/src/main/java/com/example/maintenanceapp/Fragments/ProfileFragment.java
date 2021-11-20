@@ -54,33 +54,10 @@ public class ProfileFragment extends Fragment {
         tvFullName = view.findViewById(R.id.tvNameOfUser);
 
         role = (ParseObject) this.getActivity().getIntent().getExtras().get("role");
-        //registerLandlord = view.findViewById(R.id.btnRegisterLandlord);
-        //registerLandlord.setVisibility(!(role instanceof Handyman) ? View.INVISIBLE: View.VISIBLE);
-        //logout = view.findViewById(R.id.btnLogout);
         spProfileOptions = view.findViewById(R.id.spProfileOptions);
         tvUsername.setText(ParseUser.getCurrentUser().getUsername());
         tvEmail.setText(ParseUser.getCurrentUser().getEmail());
         tvFullName.setText(ParseUser.getCurrentUser().getString("name"));
-
-//        registerLandlord.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(getContext(), RegisterLandlordActivity.class);
-//                intent.putExtra("role", role);
-//                startActivity(intent);
-//            }
-//        });
-//        logout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                ParseUser.logOut();
-//                if(ParseUser.getCurrentUser() != null)
-//                   Log.e("Logout Error", "logout err");
-//
-//                Intent intent = new Intent(getContext(), LoginActivity.class);
-//                startActivity(intent);
-//            }
-//        });
 
         // Create and set array adapters for each spinner
         ArrayAdapter<String> profileOptionsAdapter = new ArrayAdapter<>(getContext(),

@@ -40,7 +40,7 @@ public class HomeFragment extends Fragment {
     Button newWorkOrderBtn;
     ImageView ivPending, ivUnderWorks, ivResolved, ivToDo, ivComplete;
     private RecyclerView rvWorkOrders;
-    RadioGroup radioGroup;
+    public RadioGroup radioGroup;
     RadioButton radioPending, radioApproved, radioResolved, radioToDo;
     private WorkOrderAdapter adapter;
     private LinkedList<WorkOrder> allWorkOrders;
@@ -75,7 +75,6 @@ public class HomeFragment extends Fragment {
 
             }
         });
-
         if (newWorkOrderBtn != null)
             newWorkOrderBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -86,7 +85,6 @@ public class HomeFragment extends Fragment {
                     startActivity(intent);
                 }
             });
-//
         // Configure the refreshing colors
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
@@ -120,38 +118,6 @@ public class HomeFragment extends Fragment {
             return inflater.inflate(R.layout.fragment_home_handyman, container, false);
         }
 
-    }
-    // This function is not necessary anymore, using for reference only, will delete later
-    public void queryWorkOrders() {
-        // Hides visibility of NewWorkOrder Button if the current user isn't a Tenant
-        ParseQuery<WorkOrder> query = ParseQuery.getQuery(WorkOrder.class);
-
-        if (role instanceof Tenant)
-            query.whereContains("tenant", role.getObjectId());
-
-        else if (role instanceof Landlord)
-            query.whereContains("landlord", role.getObjectId());
-
-        else if (role instanceof Handyman)
-        {
-            query.whereEqualTo(WorkOrder.KEY_STATUS, false);
-            query.whereContainedIn("landlord",  ((Handyman) role).getLandlords());
-        }
-
-        query.findInBackground(new FindCallback<WorkOrder>() {
-            @Override
-            public void done(List<WorkOrder> workOrders, ParseException e) {
-                if (e != null) {
-                    Log.e("Error", e.getMessage());
-                    return;
-                }
-
-                allWorkOrders.clear();
-                for (WorkOrder wo: workOrders)
-                    allWorkOrders.push(wo);
-                adapter.notifyDataSetChanged();
-            }
-        });
     }
 
     public void filterWorkorders(int buttonId) {

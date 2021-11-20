@@ -30,10 +30,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-//        Seeds the database to have data to work with, and return to LoginActivity//
-//        Intent intent = new Intent(this.getBaseContext(), Seeds.class);
-//        startActivity(intent);
-
         // Extract info from the UI
         editTextUsername = findViewById(R.id.Username);
         editTextPassword = findViewById(R.id.Password);

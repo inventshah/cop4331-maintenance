@@ -111,11 +111,10 @@ public class WorkOrderAdapter extends RecyclerView.Adapter<WorkOrderAdapter.View
 
                                         @Override
                                         public void done(ParseException e) {
-                                            fragment.queryWorkOrders();
-                                            //notifyDataSetChanged();
+                                            int btnId = fragment.radioGroup.getCheckedRadioButtonId();
+                                            fragment.filterWorkorders(btnId);
                                         }
                                     });
-                                    //fragment.getActivity().recreate();
 
                                 }
                             });
