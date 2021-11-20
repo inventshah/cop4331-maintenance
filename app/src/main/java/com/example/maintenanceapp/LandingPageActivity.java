@@ -2,6 +2,8 @@ package com.example.maintenanceapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,10 +21,19 @@ public class LandingPageActivity extends AppCompatActivity {
         super.onCreate(savedInstance);
         setContentView(R.layout.activity_landingpage);
 
-        if(ParseUser.getCurrentUser() != null)
-            goMainActivity();
-        else
-            goLoginActivity();
+        Handler h = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+
+                if(ParseUser.getCurrentUser() != null)
+                    goMainActivity();
+                else
+                    goLoginActivity();
+            }
+        };
+
+        h.sendEmptyMessageDelayed(0, 1200); // 1500 is time in miliseconds
+
     }
 
     private void goMainActivity() {

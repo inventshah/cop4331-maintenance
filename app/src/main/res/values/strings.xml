@@ -9,4 +9,14 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string-array name="postOptionsHM">
+        <item> </item>
+        <item>Log out</item>
+        <item>Register Landlord</item>
+    </string-array>
+
+    <string-array name="postOptions">
+        <item> </item>
+        <item>Log out</item>
+    </string-array>
 </resources>

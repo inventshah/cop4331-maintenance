@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.example.maintenanceapp.Fragments.HomeFragment;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -130,10 +131,12 @@ public class ShowWorkOrderActivity extends AppCompatActivity {
                                    workOrder.setRating(rating);
                                    workOrder.saveInBackground();
                                    dialog.dismiss();
+
                                }
                            }
+                            MainActivity.bottomNavigationView.setSelectedItemId(R.id.action_home);
+                            finish();
 
-                          finish();
                         }
                     });
 

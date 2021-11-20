@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/tenant_toolbar">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:padding="5dp">
+
+        <Button
+            android:id="@+id/newWorkOrderBtn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="30dp"
+            android:background="@drawable/ic_baseline_post_add_24"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:backgroundTint="@null" />
+
+        <RadioGroup
+            android:id="@+id/radioToolbar"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbPending"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/pending_selector"
+                android:checked="true"/>
+
+            <RadioButton
+                android:id="@+id/rbApproved"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/approved_selector" />
+
+            <RadioButton
+                android:id="@+id/rbResolved"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/resolved_selector" />
+
+        </RadioGroup>
+
+    </RelativeLayout>
+
+</androidx.appcompat.widget.Toolbar>

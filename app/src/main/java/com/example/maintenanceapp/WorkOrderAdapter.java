@@ -13,16 +13,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.example.maintenanceapp.Fragments.HomeFragment;
 import com.parse.DeleteCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.List;
 
@@ -34,12 +37,14 @@ public class WorkOrderAdapter extends RecyclerView.Adapter<WorkOrderAdapter.View
 
     public Context context;
     public ParseObject role;
+    public HomeFragment fragment;
     private List<WorkOrder> workorders;
 
-    public WorkOrderAdapter(Context context, List<WorkOrder> workorders, ParseObject role) {
+    public WorkOrderAdapter(Context context, List<WorkOrder> workorders, ParseObject role, HomeFragment fragment) {
         this.context = context;
         this.workorders = workorders;
         this.role = role;
+        this.fragment = fragment;
     }
 
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -49,7 +54,7 @@ public class WorkOrderAdapter extends RecyclerView.Adapter<WorkOrderAdapter.View
     @Override
     public void onBindViewHolder(WorkOrderAdapter.ViewHolder holder, int position) {
         WorkOrder workOrder = workorders.get(position);
-        holder.bind(workOrder, this.role, context);
+        holder.bind(workOrder, this.role, context, fragment);
     }
 
     @Override
@@ -74,7 +79,7 @@ public class WorkOrderAdapter extends RecyclerView.Adapter<WorkOrderAdapter.View
             btnMoreInfo = itemView.findViewById(R.id.btnMoreInfo);
         }
 
-        public void bind(WorkOrder workOrder, ParseObject role, Context context) {
+        public void bind(WorkOrder workOrder, ParseObject role, Context context, HomeFragment fragment) {
             tvTitle.setText(workOrder.getTitle());
             tvStatus.setText(workOrder.getStatus() ? "true" : "false");
 
@@ -97,12 +102,21 @@ public class WorkOrderAdapter extends RecyclerView.Adapter<WorkOrderAdapter.View
                     btnDeleteWorkOrder.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.bottomNavigationView.getContext());
+                            AlertDialog.Builder alert = new AlertDialog.Builder(context);
                             alert.setTitle("Are you sure you want to delete this work order?");
 
                             alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
-                                    workOrder.deleteInBackground();
+                                    workOrder.deleteInBackground(new DeleteCallback(){
+
+                                        @Override
+                                        public void done(ParseException e) {
+                                            fragment.queryWorkOrders();
+                                            //notifyDataSetChanged();
+                                        }
+                                    });
+                                    //fragment.getActivity().recreate();
+
                                 }
                             });
 
@@ -119,9 +133,10 @@ public class WorkOrderAdapter extends RecyclerView.Adapter<WorkOrderAdapter.View
             btnMoreInfo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(MainActivity.bottomNavigationView.getContext(), ShowWorkOrderActivity.class);
+                    Intent intent = new Intent(context, ShowWorkOrderActivity.class);
                     intent.putExtra("workOrder", workOrder);
                     intent.putExtra("role", role);
+                    //intent.putExtra("homeFragment", fragment);
                     context.startActivity(intent);
                 }
             });

@@ -8,6 +8,7 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+import com.parse.boltsinternal.Task;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -55,13 +56,7 @@ public class Tenant extends ParseObject {
         workOrder.setAttachment(new ParseFile(photoFile));
         workOrder.setQuotes(new ArrayList<>());
         workOrder.setRating(0);
-        workOrder.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if(e != null)
-                    Log.e("Error", e.getMessage());
-            }
-        });
+        workOrder.saveInBackground();
 
         return true;
     }

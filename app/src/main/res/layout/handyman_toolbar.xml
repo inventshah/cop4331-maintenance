@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/handyman_toolbar">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:padding="5dp">
+
+        <RadioGroup
+            android:id="@+id/radioToolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbToDo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/todo_selector"
+                android:checked="true"/>
+
+            <RadioButton
+                android:id="@+id/rbResolved"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/resolved_selector" />
+
+        </RadioGroup>
+
+        <ImageView
+            android:id="@+id/ivMessage"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@drawable/ic_twotone_textsms_24"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"/>
+
+    </RelativeLayout>
+
+</androidx.appcompat.widget.Toolbar>

@@ -17,8 +17,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -73,12 +75,24 @@ public class NewWorkOrderActivity extends AppCompatActivity
 
         Tenant tenant = (Tenant) role;
 
-        if(tenant.createWorkOrder(title, description, location, tenant, tenant.getLandlord(), photoFile))
-            toast = Toast.makeText(getBaseContext(), "Successful Submission", Toast.LENGTH_SHORT);
-        else
-            toast = Toast.makeText(getBaseContext(), "Failed Submission", Toast.LENGTH_SHORT);
+        WorkOrder workOrder = new WorkOrder();
+        workOrder.setTitle(title);
+        workOrder.setDescription(description);
+        workOrder.setLocation(location);
+        workOrder.setTenant(tenant);
+        workOrder.setLandlord(tenant.getLandlord());
+        workOrder.setStatus(false);
+        workOrder.setAttachment(new ParseFile(photoFile));
+        workOrder.setQuotes(new ArrayList<>());
+        workOrder.setRating(0);
+        workOrder.saveInBackground();
 
-        toast.show();
+//        if(tenant.createWorkOrder(title, description, location, tenant, tenant.getLandlord(), photoFile))
+//                    toast = Toast.makeText(getBaseContext(), "Successful Submission", Toast.LENGTH_SHORT);
+//                else
+//                    toast = Toast.makeText(getBaseContext(), "Failed Submission", Toast.LENGTH_SHORT);
+//
+//        toast.show();
         finish();
     }
 
@@ -132,4 +146,6 @@ public class NewWorkOrderActivity extends AppCompatActivity
             }
         }
     }
+
+
 }
