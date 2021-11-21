@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/Fernando/AndroidStudioProjects/MaintenanceApp/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.21927083333333333" />
+        <entry key="..\:/Users/Fernando/AndroidStudioProjects/MaintenanceApp/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.21927083333333333" />
+        <entry key="..\:/Users/Fernando/AndroidStudioProjects/MaintenanceApp/app/src/main/res/drawable/ic_baseline_post_add_24.xml" value="0.21927083333333333" />
+        <entry key="..\:/Users/Fernando/AndroidStudioProjects/MaintenanceApp/app/src/main/res/drawable/round_button.xml" value="0.26458333333333334" />
+        <entry key="..\:/Users/Fernando/AndroidStudioProjects/MaintenanceApp/app/src/main/res/layout/activity_login.xml" value="0.2375" />
+        <entry key="..\:/Users/Fernando/AndroidStudioProjects/MaintenanceApp/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/Fernando/AndroidStudioProjects/MaintenanceApp/app/src/main/res/layout/fragment_home.xml" value="0.5" />
+        <entry key="..\:/Users/Fernando/AndroidStudioProjects/MaintenanceApp/app/src/main/res/layout/fragment_profile.xml" value="0.2484375" />
+        <entry key="..\:/Users/Fernando/AndroidStudioProjects/MaintenanceApp/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.2484375" />
+        <entry key="..\:/Users/pairj/OneDrive/Documents/GitHub/cop4331-maintenance/app/src/main/res/layout/activity_landingpage.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pairj/OneDrive/Documents/GitHub/cop4331-maintenance/app/src/main/res/layout/activity_login.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pairj/OneDrive/Documents/GitHub/cop4331-maintenance/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pairj/OneDrive/Documents/GitHub/cop4331-maintenance/app/src/main/res/layout/activity_newworkorder.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pairj/OneDrive/Documents/GitHub/cop4331-maintenance/app/src/main/res/layout/activity_registerlandlord.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pairj/OneDrive/Documents/GitHub/cop4331-maintenance/app/src/main/res/layout/activity_signup.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pairj/OneDrive/Documents/GitHub/cop4331-maintenance/app/src/main/res/layout/activity_viewquotes.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pairj/OneDrive/Documents/GitHub/cop4331-maintenance/app/src/main/res/layout/activity_workorder.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pairj/OneDrive/Documents/GitHub/cop4331-maintenance/app/src/main/res/layout/dialog_givequote.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pairj/OneDrive/Documents/GitHub/cop4331-maintenance/app/src/main/res/layout/fragment_home_handyman.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pairj/OneDrive/Documents/GitHub/cop4331-maintenance/app/src/main/res/layout/fragment_home_landlord.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pairj/OneDrive/Documents/GitHub/cop4331-maintenance/app/src/main/res/layout/fragment_home_tenant.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pairj/OneDrive/Documents/GitHub/cop4331-maintenance/app/src/main/res/layout/fragment_profile.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pairj/OneDrive/Documents/GitHub/cop4331-maintenance/app/src/main/res/layout/handyman_toolbar.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pairj/OneDrive/Documents/GitHub/cop4331-maintenance/app/src/main/res/layout/landlord_toolbar.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pairj/OneDrive/Documents/GitHub/cop4331-maintenance/app/src/main/res/layout/layout_detailedworkorder.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pairj/OneDrive/Documents/GitHub/cop4331-maintenance/app/src/main/res/layout/profile_toolbar.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pairj/OneDrive/Documents/GitHub/cop4331-maintenance/app/src/main/res/layout/tenant_toolbar.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pairj/OneDrive/Documents/GitHub/cop4331-maintenance/app/src/main/res/layout/user_profile_elements.xml" value="0.36666666666666664" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

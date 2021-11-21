@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/tvText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"
+        android:text="Create A New Workorder"
+        android:textSize="30sp" />
+
+    <EditText
+        android:id="@+id/etTitle"
+        android:layout_width="394dp"
+        android:layout_height="65dp"
+        android:layout_below="@id/tvText"
+        android:hint="Title"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/etLocation"
+        android:layout_width="393dp"
+        android:layout_height="49dp"
+        android:layout_below="@+id/etTitle"
+        android:hint="Location" />
+
+    <EditText
+        android:id="@+id/etDescription"
+        android:layout_width="395dp"
+        android:layout_height="85dp"
+        android:layout_below="@id/etLocation"
+        android:hint="Description"
+        android:inputType="textMultiLine" />
+
+    <ImageView
+        android:id="@+id/ivImagePreview"
+        android:layout_width="150dp"
+        android:layout_height="200dp"
+        android:layout_below="@+id/etDescription"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="39dp"
+        android:background="@drawable/ic_baseline_image_24" />
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnTakePhoto"
+        android:layout_centerHorizontal="true"
+        android:text="Submit" />
+
+    <Button
+        android:id="@+id/btnTakePhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivImagePreview"
+        android:layout_centerHorizontal="true"
+        android:text="Add A Photo" />
+
+
+</RelativeLayout>
