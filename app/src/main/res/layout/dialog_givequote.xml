@@ -1,16 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter Quote Amount:"/>
 
     <EditText
-        android:id="@+id/dialogGiveQuote_amount"
+        android:id="@+id/dialogGiveQuote_etAmount"
         android:inputType="numberDecimal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginBottom="4dp"/>
+        android:hint="00.00"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter Scheduled Completion Date:"/>
+
+    <EditText
+        android:id="@+id/dialogGiveQuote_etScheduledCompletion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:hint="MM/DD/YYYY"/>
 
 </LinearLayout>

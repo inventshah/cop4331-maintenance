@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -68,20 +69,22 @@ public class ShowWorkOrderActivity extends AppCompatActivity {
         btnGeneric.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(role instanceof Landlord)
+                if (role instanceof Landlord)
                 {
                     Intent intent = new Intent(getBaseContext(), ViewQuotesActivity.class);
                     intent.putExtra("workOrder",workOrder);
                     startActivity(intent);
                     overridePendingTransition(R.anim.from_bottom, R.anim.idle);
                 }
-                else if(role instanceof Handyman || role instanceof Tenant)
+                else if (role instanceof Handyman || role instanceof Tenant)
                 {
                     AlertDialog.Builder builder = new AlertDialog.Builder(ShowWorkOrderActivity.this);
                     builder.setTitle(role instanceof Handyman ? "Specify Amount" : "Give Rating");
 
                     View viewInflated = LayoutInflater.from(getBaseContext()).inflate(R.layout.dialog_givequote, null);
-                    EditText input = (EditText) viewInflated.findViewById(R.id.dialogGiveQuote_amount);
+                    EditText etAmount =  viewInflated.findViewById(R.id.dialogGiveQuote_etAmount);
+                    EditText etScheduledCompletion =  viewInflated.findViewById(R.id.dialogGiveQuote_etScheduledCompletion);
+
                     builder.setView(viewInflated);
 
                     // default button methods
@@ -103,13 +106,16 @@ public class ShowWorkOrderActivity extends AppCompatActivity {
                         public void onClick(View view) {
                            if(role instanceof Handyman)
                            {
-                               String s = input.getText().toString();
-                               if(s.matches("[0-9]+\\.[0-9][0-9]"))
+                               String amount = etAmount.getText().toString();
+                               String scheduledCompletion = etScheduledCompletion.getText().toString();
+                               if(amount.matches("[0-9]+\\.[0-9][0-9]") &&
+                                       scheduledCompletion.matches("^([0-9]{2}/[0-9]{2}/[0-9]{4}){1}$"))
                                {
                                    // add a quote to all quotes list on workorder object
                                    Quote q = new Quote();
-                                   q.setAmount(Double.parseDouble(s));
+                                   q.setAmount(Double.parseDouble(amount));
                                    q.setHandyman((Handyman) role);
+                                   q.setDate(scheduledCompletion);
                                    q.saveInBackground(new SaveCallback() {
                                        @Override
                                        public void done(ParseException e) {
@@ -120,23 +126,27 @@ public class ShowWorkOrderActivity extends AppCompatActivity {
                                        }
                                    });
                                    dialog.dismiss();
+                                   MainActivity.bottomNavigationView.setSelectedItemId(R.id.action_home);
+                                   finish();
+                                   return;
                                }
                            }
-                           else
-                           {
-                               String s = input.getText().toString();
-                               int rating = Integer.parseInt(s);
-                               if(rating <= 5 && rating >= 1)
+                           // Set the rating field if user is a Tenant
+                           else {
+                               int rating = Integer.parseInt(etAmount.getText().toString());
+                               if (rating <= 5 && rating >= 1)
                                {
                                    workOrder.setRating(rating);
                                    workOrder.saveInBackground();
                                    dialog.dismiss();
-
+                                   MainActivity.bottomNavigationView.setSelectedItemId(R.id.action_home);
+                                   finish();
+                                   return;
                                }
                            }
-                            MainActivity.bottomNavigationView.setSelectedItemId(R.id.action_home);
-                            finish();
-
+                            Toast toast = new Toast(getApplicationContext());
+                            toast.setText("Incorrect fields!");
+                            toast.show();
                         }
                     });
 
@@ -149,6 +159,5 @@ public class ShowWorkOrderActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 }

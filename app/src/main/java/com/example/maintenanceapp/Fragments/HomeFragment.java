@@ -38,7 +38,6 @@ import models.*;
 public class HomeFragment extends Fragment {
 
     Button newWorkOrderBtn;
-    ImageView ivPending, ivUnderWorks, ivResolved, ivToDo, ivComplete;
     private RecyclerView rvWorkOrders;
     public RadioGroup radioGroup;
     RadioButton radioPending, radioApproved, radioResolved, radioToDo;
@@ -72,7 +71,6 @@ public class HomeFragment extends Fragment {
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 int id = radioGroup.getCheckedRadioButtonId();
                 filterWorkorders(id);
-
             }
         });
         if (newWorkOrderBtn != null)
@@ -123,7 +121,6 @@ public class HomeFragment extends Fragment {
     public void filterWorkorders(int buttonId) {
         ParseQuery<WorkOrder> query = new ParseQuery<WorkOrder>(WorkOrder.class);
         if (role instanceof Handyman) {
-            query.whereEqualTo("handyman", role);
             if (buttonId == radioToDo.getId())
                 query.whereEqualTo("status", false);
             else query.whereEqualTo("status",true);

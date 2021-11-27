@@ -115,7 +115,6 @@ public class WorkOrderAdapter extends RecyclerView.Adapter<WorkOrderAdapter.View
                                             fragment.filterWorkorders(btnId);
                                         }
                                     });
-
                                 }
                             });
 
@@ -135,7 +134,6 @@ public class WorkOrderAdapter extends RecyclerView.Adapter<WorkOrderAdapter.View
                     Intent intent = new Intent(context, ShowWorkOrderActivity.class);
                     intent.putExtra("workOrder", workOrder);
                     intent.putExtra("role", role);
-                    //intent.putExtra("homeFragment", fragment);
                     context.startActivity(intent);
                 }
             });

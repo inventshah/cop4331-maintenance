@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="5dp"
+    app:cardMaxElevation="20dp"
+    android:elevation="5dp"
+    android:layout_margin="15dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardPreventCornerOverlap="true"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/tvPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$50"
+            android:layout_centerVertical="true"
+            android:textSize="23sp"
+            android:layout_alignParentEnd="true"/>
+
+        <TextView
+            android:id="@+id/tvHMlabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Handyman:"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/tvHMName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Daniel Smith"
+            android:layout_toEndOf="@id/tvHMlabel"
+            android:layout_marginStart="4dp"/>
+
+        <TextView
+            android:id="@+id/tvDatelabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date of scheduled completion:"
+            android:layout_below="@+id/tvHMName"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tvDateOfScheduledCompletion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/tvDatelabel"
+            android:text="11/15/21"
+            android:layout_below="@id/tvHMlabel"
+            android:layout_marginStart="4dp"/>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

@@ -17,7 +17,7 @@ public class Handyman extends ParseObject {
         return true;
     }
 
-    public ParseUser getUser() { return getParseUser(KEY_USER); }
+    public ParseUser getUser() { return (ParseUser) get(KEY_USER); }
 
     public void setUser(ParseUser user) { put(KEY_USER, user); }
 

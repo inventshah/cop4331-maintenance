@@ -17,6 +17,13 @@
             android:orientation="horizontal">
 
             <RadioButton
+                android:id="@+id/rbPending"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/pending_selector"
+                android:checked="true"/>
+
+            <RadioButton
                 android:id="@+id/rbToDo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
