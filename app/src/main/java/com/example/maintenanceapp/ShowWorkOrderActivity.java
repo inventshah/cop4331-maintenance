@@ -64,7 +64,12 @@ public class ShowWorkOrderActivity extends AppCompatActivity {
             Glide.with(getBaseContext()).load(image.getUrl()).transform(new CenterCrop(), new RoundedCornersTransformation(35, 0))
                     .into(ivImage);
 
-        if ((role instanceof Tenant && workOrder.getRating() == 0) || (workOrder.getFinalQuote() == null))
+        // Set Tenant giveRating btn to visible
+        if(role instanceof Tenant && workOrder.getHandyman() != null && workOrder.getStatus() && workOrder.getRating() != 0)
+            btnGeneric.setVisibility(View.VISIBLE);
+
+        // Set Handyman giveQuote btn to visible or Landlord viewQuotes btn to visible
+        if((role instanceof Handyman || role instanceof Landlord) && !workOrder.getStatus() && workOrder.getFinalQuote() == null)
             btnGeneric.setVisibility(View.VISIBLE);
 
         btnGeneric.setText(role instanceof Tenant ? "Give Rating" : role instanceof Handyman ? "Give Quote" : "View Quotes");
@@ -88,10 +93,11 @@ public class ShowWorkOrderActivity extends AppCompatActivity {
                     builder.setTitle(role instanceof Handyman ? "Specify Amount" : "Give Rating");
                     View viewInflated = null;
 
-                    if(role instanceof Handyman)
+                    if (role instanceof Handyman)
                         viewInflated = LayoutInflater.from(getBaseContext()).inflate(R.layout.dialog_givequote, null);
                     else
                         viewInflated = LayoutInflater.from(getBaseContext()).inflate(R.layout.dialog_giverating, null);
+
                     EditText etAmount =  viewInflated.findViewById(R.id.dialogGiveQuote_etAmount);
                     EditText etScheduledCompletion =  viewInflated.findViewById(R.id.dialogGiveQuote_etScheduledCompletion);
                     EditText etRating = viewInflated.findViewById(R.id.dialogGiveRating_etRating);
@@ -164,35 +170,19 @@ public class ShowWorkOrderActivity extends AppCompatActivity {
                                    workOrder.getHandyman().fetchInBackground(new GetCallback<ParseObject>() {
                                        @Override
                                        public void done(ParseObject handyman, ParseException e) {
-                                           ((Handyman) handyman).getUser().fetchInBackground(new GetCallback<ParseObject>() {
-                                               @Override
-                                               public void done(ParseObject user, ParseException e) {
-                                                   if (e != null)
-                                                   {
-                                                       Log.e("Error", e.getMessage());
-                                                       return;
-                                                   }
-                                                   double points = user.getNumber("points").doubleValue();
-                                                   Log.i("Points", ""+points);
-                                                   user.put("points", (points + (rating > 1 ? rating * 0.2 : 0)));
-                                                   user.saveInBackground();
-                                               }
-                                           });
+                                           double points = ((Handyman)handyman).getPoints();
+                                           ((Handyman)handyman).setPoints(points + (rating > 1 ? rating * 0.2 : 0));
+                                           handyman.saveInBackground();
                                        }
                                    });
-                                   // Add points to Landlord depending on timeRating
+                                   // Give points to Landlord depending on timeRating
                                    workOrder.getLandlord().fetchInBackground(new GetCallback<ParseObject>() {
                                        @Override
                                        public void done(ParseObject landlord, ParseException e) {
-                                           ((Landlord) landlord).getUser().fetchInBackground(new GetCallback<ParseObject>() {
-                                               @Override
-                                               public void done(ParseObject user, ParseException e) {
-                                                   double points = user.getDouble("points");
-                                                   user.put("points", points + (radioGroup.getCheckedRadioButtonId() ==
-                                                           R.id.dialogGiveRating_radioBtnYes ? 1:0));
-                                                   user.saveInBackground();
-                                               }
-                                           });
+                                           double points = ((Landlord)landlord).getPoints();
+                                           ((Landlord)landlord).setPoints(points+(radioGroup.getCheckedRadioButtonId() ==
+                                                   R.id.dialogGiveRating_radioBtnYes ? 1:0));
+                                           landlord.saveInBackground();
                                        }
                                    });
 

@@ -37,8 +37,6 @@ import models.Tenant;
 public class ProfileFragment extends Fragment {
 
     ParseObject role;
-    Button logout;
-    Button registerLandlord;
     private TextView tvFullName;
     private TextView tvUsername;
     private TextView tvEmail;
@@ -63,12 +61,12 @@ public class ProfileFragment extends Fragment {
         tvPoints = view.findViewById(R.id.tvPoints);
         spProfileOptions = view.findViewById(R.id.spProfileOptions);
         tvLandlordKey = view.findViewById(R.id.tvLandlordKey);
-
         tvUsername.setText(ParseUser.getCurrentUser().getUsername());
         tvEmail.setText(ParseUser.getCurrentUser().getEmail());
         tvFullName.setText(ParseUser.getCurrentUser().getString("name"));
-        tvPoints.setText("Points: "+ParseUser.getCurrentUser().getNumber("points").toString());
-        if(role instanceof Landlord)
+        tvPoints.setText("Points: "+(Math.round(role.getDouble("points")*100.0)/100.0));
+
+        if (role instanceof Landlord)
         {
             tvLandlordKey.setVisibility(View.VISIBLE);
             tvLandlordKey.setText(((Landlord) role).getLandLordKey().toString());
@@ -88,10 +86,11 @@ public class ProfileFragment extends Fragment {
                 if (selectedItem.equals("Log out"))
                 {
                     ParseUser.logOut();
-                    if(ParseUser.getCurrentUser() != null)
+                    if (ParseUser.getCurrentUser() != null)
                         Log.e("Logout Error", "logout err");
 
                     Intent intent = new Intent(getContext(), LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 }
                 else if (selectedItem.equals("Register Landlord")) {

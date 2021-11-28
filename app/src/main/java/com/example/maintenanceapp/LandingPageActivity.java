@@ -25,7 +25,7 @@ public class LandingPageActivity extends AppCompatActivity {
             @Override
             public void handleMessage(Message msg) {
 
-                if(ParseUser.getCurrentUser() != null)
+                if (ParseUser.getCurrentUser() != null)
                     goMainActivity();
                 else
                     goLoginActivity();

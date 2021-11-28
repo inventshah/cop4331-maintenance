@@ -119,7 +119,7 @@ public class HomeFragment extends Fragment {
         if (role instanceof Handyman) {
 
             // Get all workorders that are not completed under handyman's landlord(s) properties
-            if(buttonId == radioPending.getId())
+            if (buttonId == radioPending.getId())
             {
                 query.whereEqualTo("status", false);
                 query.whereDoesNotExist("handyman");

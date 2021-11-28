@@ -38,30 +38,32 @@ public class RegisterLandlordActivity extends AppCompatActivity {
         role = (ParseObject) getIntent().getExtras().get("role");
         btnAddLandlord = findViewById(R.id.btnAddLandlord);
         etlandlordKey = findViewById(R.id.registerLandlord_etLandlordKey);
-
         btnAddLandlord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 String landlordKey = etlandlordKey.getText().toString();
-                if(landlordKey.length() > 0)
+                if (landlordKey.length() > 0)
                 {
-                    List<ParseObject> landlords = ((Handyman) role).getLandlords();
-
+                    List<Landlord> landlords = ((Handyman) role).getLandlords();
                     ParseQuery<Landlord> query = ParseQuery.getQuery(Landlord.class);
                     query.whereContains("landlordKey", landlordKey);
-
                     query.getFirstInBackground(new GetCallback<Landlord>() {
                         @Override
-                        public void done(Landlord object, ParseException e) {
-                            if(e == null)
+                        public void done(Landlord landlord, ParseException e) {
+                            if (e == null)
                             {
-                                landlords.add(object);
+                                // Don't register duplicate Landlords
+                                for(Landlord l :  ((Handyman) role).getLandlords())
+                                    if(l.getObjectId().equals(landlord.getObjectId()))
+                                        return;
+
+                                landlords.add(landlord);
                                 ((Handyman) role).setLandlords(landlords);
                                 role.saveInBackground(new SaveCallback() {
                                     @Override
                                     public void done(ParseException e) {
-                                        if(e == null)
+                                        if (e == null)
                                         {
                                             etlandlordKey.setText("");
                                             MainActivity.bottomNavigationView.setSelectedItemId(R.id.action_home);
@@ -92,6 +94,5 @@ public class RegisterLandlordActivity extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 }

@@ -73,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void goMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         List<ParseObject> res = (List<ParseObject>) ParseUser.getCurrentUser().get("role");
         res.get(0).fetchInBackground(new GetCallback<ParseObject>() {
             @Override

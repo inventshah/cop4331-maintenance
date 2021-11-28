@@ -27,8 +27,6 @@ import models.Handyman;
 import models.Landlord;
 import models.Tenant;
 
-// TODO add some validators to check if new Users meet the requirements for a Tenant, Landlord, etc
-
 public class SignUpActivity extends AppCompatActivity {
 
     Button signupBtn;
@@ -69,7 +67,7 @@ public class SignUpActivity extends AppCompatActivity {
                 int id = radioGroupRole.getCheckedRadioButtonId();
 
                 // Check for empty fields
-                if(name.length() > 0 && username.length() > 0 && password.length() > 0 &&
+                if (name.length() > 0 && username.length() > 0 && password.length() > 0 &&
                      (id != R.id.radioTenant || landlordKey.length() > 0)
                   )
                     signup(name, username, password, landlordKey, id);
@@ -102,7 +100,7 @@ public class SignUpActivity extends AppCompatActivity {
                     tenant.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
-                            if(e == null)
+                            if (e == null)
                             {
                                 role.add(tenant);
                                 finishSignup(role, name, username, password);
@@ -128,12 +126,11 @@ public class SignUpActivity extends AppCompatActivity {
         {
             // Create and initialize a Landlord and then create a ParseUser to associate with Landlord
             Landlord landlord = new Landlord();
-            landlord.setWorkOrders(new ArrayList<>());
             landlord.setLandlordKey(makeKey());
             landlord.saveInBackground(new SaveCallback() {
                 @Override
                 public void done(ParseException e) {
-                    if(e == null)
+                    if (e == null)
                     {
                         role.add(landlord);
                         finishSignup(role, name, username, password);
@@ -148,12 +145,11 @@ public class SignUpActivity extends AppCompatActivity {
         {
             // Create and initialize a Handyman
             Handyman handyman = new Handyman();
-            handyman.setResolvedWorkOrders(new ArrayList<>());
             handyman.setLandlords(new ArrayList<>());
             handyman.saveInBackground(new SaveCallback() {
                 @Override
                 public void done(ParseException e) {
-                    if(e == null)
+                    if (e == null)
                     {
                         role.add(handyman);
                         finishSignup(role, name, username, password);
@@ -168,6 +164,7 @@ public class SignUpActivity extends AppCompatActivity {
     private void goMainActivity(ParseObject role) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("role", role);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
     }
@@ -181,24 +178,18 @@ public class SignUpActivity extends AppCompatActivity {
     public void finishSignup(ArrayList<ParseObject> role, String name, String username, String password){
 
         // Finish creating the ParseUser, because all required information is valid
+        role.get(0).put("points", 0);
         ParseUser user = new ParseUser();
         user.setUsername(username);
         user.setPassword(password);
         user.put("name", name);
-        user.put("points", (double)0);
         user.put("role", role);
-
-        // TODO: testing acl persmissions
-        ParseACL acl = new ParseACL();
-        acl.setPublicWriteAccess(true);
-        acl.setPublicReadAccess(true);
-        user.setACL(acl);
-
         user.signUpInBackground(new SignUpCallback() {
             @Override
             public void done(ParseException e) {
-                if(e == null)
+                if (e == null)
                 {
+                    // Put a reference to a ParseUser Object
                     role.get(0).put("user", user);
                     user.saveInBackground(new SaveCallback() {
                         @Override
@@ -215,5 +206,4 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
     }
-
 }

@@ -23,11 +23,6 @@ public class WorkOrder extends ParseObject {
     public static final String KEY_STATUS = "status";
     public static final String KEY_ATTACHMENT = "attachment"; // image attachment
 
-    // check if work order is valid, handyman can be null
-    public boolean validateWorkOrder(){
-        return true;
-    }
-
     public Tenant getTenant() { return (Tenant)getParseObject(KEY_TENANT); }
 
     public void setTenant(Tenant tenant) { put(KEY_TENANT, tenant); };

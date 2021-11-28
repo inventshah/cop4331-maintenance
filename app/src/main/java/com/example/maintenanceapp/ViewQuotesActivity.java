@@ -15,9 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.parse.GetCallback;
+import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,8 +85,8 @@ public class ViewQuotesActivity extends AppCompatActivity {
 
                     // Remove all other quotes, keep only the approved quote
                     Quote approvedQuote = allQuotes.get(position);
-                    for(Quote q : allQuotes)
-                        if(!q.equals(approvedQuote))
+                    for (Quote q : allQuotes)
+                        if (!q.equals(approvedQuote))
                             q.deleteInBackground();
                     allQuotes.clear();
                     allQuotes.add(approvedQuote);
@@ -101,23 +104,13 @@ public class ViewQuotesActivity extends AppCompatActivity {
                     workOrder.getTenant().fetchInBackground(new GetCallback<ParseObject>() {
                         @Override
                         public void done(ParseObject tenant, ParseException e) {
-                            ((Tenant) tenant).getUser().fetchInBackground(new GetCallback<ParseObject>() {
-                                @Override
-                                public void done(ParseObject user, ParseException e) {
-                                    if(e != null)
-                                    {
-                                        Log.e("Error", e.getMessage());
-                                        return;
-                                    }
-                                    double points =  user.getNumber("points").doubleValue();
-                                    Log.i("Points", ""+points +"" + (points+1.0));
-                                    user.put("points", points+1);
-                                    //user.increment("points");
-                                    user.saveInBackground();
-                                }
-                            });
+                            double points = ((Tenant)tenant).getPoints();
+                            ((Tenant)tenant).setPoints(points+1);
+                            tenant.saveInBackground();
                         }
                     });
+
+                    // TODO : do main activity instead
                     onBackPressed();
                     break;
             }
