@@ -22,10 +22,15 @@ import android.widget.TextView;
 import com.example.maintenanceapp.LoginActivity;
 import com.example.maintenanceapp.R;
 import com.example.maintenanceapp.RegisterLandlordActivity;
+import com.parse.GetCallback;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import org.w3c.dom.Text;
+
 import models.Handyman;
+import models.Landlord;
 import models.Tenant;
 
 
@@ -37,6 +42,8 @@ public class ProfileFragment extends Fragment {
     private TextView tvFullName;
     private TextView tvUsername;
     private TextView tvEmail;
+    private TextView tvPoints;
+    private TextView tvLandlordKey;
     Spinner spProfileOptions;
     public static final String TAG = "ProfileFragment";
     public ProfileFragment() {
@@ -47,17 +54,25 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        role = (ParseObject) this.getActivity().getIntent().getExtras().get("role");
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.profile_toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         tvUsername = view.findViewById(R.id.tvProfileUsername);
         tvEmail = view.findViewById(R.id.tvEmail);
         tvFullName = view.findViewById(R.id.tvNameOfUser);
-
-        role = (ParseObject) this.getActivity().getIntent().getExtras().get("role");
+        tvPoints = view.findViewById(R.id.tvPoints);
         spProfileOptions = view.findViewById(R.id.spProfileOptions);
+        tvLandlordKey = view.findViewById(R.id.tvLandlordKey);
+
         tvUsername.setText(ParseUser.getCurrentUser().getUsername());
         tvEmail.setText(ParseUser.getCurrentUser().getEmail());
         tvFullName.setText(ParseUser.getCurrentUser().getString("name"));
+        tvPoints.setText("Points: "+ParseUser.getCurrentUser().getNumber("points").toString());
+        if(role instanceof Landlord)
+        {
+            tvLandlordKey.setVisibility(View.VISIBLE);
+            tvLandlordKey.setText(((Landlord) role).getLandLordKey().toString());
+        }
 
         // Create and set array adapters for each spinner
         ArrayAdapter<String> profileOptionsAdapter = new ArrayAdapter<>(getContext(),
@@ -65,7 +80,6 @@ public class ProfileFragment extends Fragment {
                 getResources().getStringArray(role instanceof Handyman ? R.array.postOptionsHM : R.array.postOptions));
 
         spProfileOptions.setAdapter(profileOptionsAdapter);
-
         spProfileOptions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
@@ -93,7 +107,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }

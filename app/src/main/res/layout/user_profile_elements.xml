@@ -39,5 +39,23 @@
         android:layout_centerInParent="true"
         android:text="email"
         android:layout_marginTop="7dp"/>
+    <TextView
+        android:id="@+id/tvPoints"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvEmail"
+        android:layout_centerInParent="true"
+        android:text=""
+        android:layout_marginTop="7dp"/>
+
+    <TextView
+        android:id="@+id/tvLandlordKey"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvPoints"
+        android:layout_centerInParent="true"
+        android:text=""
+        android:layout_marginTop="7dp"
+        android:visibility="invisible"/>
     
 </RelativeLayout>

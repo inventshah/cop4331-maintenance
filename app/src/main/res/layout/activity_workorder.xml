@@ -52,6 +52,16 @@
             app:backgroundTint="@null" />
 
         <Button
+            android:id="@+id/btnResolveWorkOrder"
+            android:layout_width="39dp"
+            android:layout_height="39dp"
+            android:layout_below="@id/tvStatus"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/ic_baseline_check_circle_outline_24"
+            android:visibility="invisible"
+            app:backgroundTint="@null" />
+
+        <Button
             android:id="@+id/btnMoreInfo"
             android:layout_width="40dp"
             android:layout_height="40dp"

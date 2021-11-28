@@ -9,13 +9,16 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
+import androidx.fragment.app.Fragment;
 
+import com.example.maintenanceapp.Fragments.HomeFragment;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -23,16 +26,14 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import models.*;
 
-// TODO: fix btn visibility
-
 public class NewWorkOrderActivity extends AppCompatActivity
 {
     ParseObject role;
-    Toast toast;
     Button submitBtn;
     EditText editTextDescription;
     EditText editTextTitle;
@@ -67,14 +68,14 @@ public class NewWorkOrderActivity extends AppCompatActivity
             String description = editTextDescription.getText().toString();
             String location = editTextLocation.getText().toString();
             String title = editTextTitle.getText().toString();
-            submitWorkOrder(description, location, title);
+            if (description.length() > 0 && location.length() > 0 && title.length() > 0 && photoFile != null)
+                submitWorkOrder(description, location, title);
         });
     }
 
     public void submitWorkOrder(String description, String location, String title) {
 
         Tenant tenant = (Tenant) role;
-
         WorkOrder workOrder = new WorkOrder();
         workOrder.setTitle(title);
         workOrder.setDescription(description);
@@ -87,13 +88,9 @@ public class NewWorkOrderActivity extends AppCompatActivity
         workOrder.setRating(0);
         workOrder.saveInBackground();
 
-//        if(tenant.createWorkOrder(title, description, location, tenant, tenant.getLandlord(), photoFile))
-//                    toast = Toast.makeText(getBaseContext(), "Successful Submission", Toast.LENGTH_SHORT);
-//                else
-//                    toast = Toast.makeText(getBaseContext(), "Failed Submission", Toast.LENGTH_SHORT);
-//
-//        toast.show();
+        MainActivity.bottomNavigationView.setSelectedItemId(R.id.action_home);
         finish();
+        return;
     }
 
     public void launchCamera(View view) {

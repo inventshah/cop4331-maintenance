@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
     public void login(String username, String password)
     {
         ParseUser.logInInBackground(username, password, (user, e) -> {
-            if(e == null)
+            if (user != null)
             {
                 Toast toast = Toast.makeText(getApplicationContext(), "Welcome Back " + user.get("name"),
                         Toast.LENGTH_SHORT);
@@ -64,9 +64,9 @@ public class LoginActivity extends AppCompatActivity {
                 Toast toast = Toast.makeText(getApplicationContext(), "Incorrect Username or Password",
                         Toast.LENGTH_SHORT);
                 toast.show();
+                Log.e("Error", e.getMessage());
             }
         });
-
         editTextUsername.setText("");
         editTextPassword.setText("");
     }
@@ -82,6 +82,5 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 }

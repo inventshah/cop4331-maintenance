@@ -30,7 +30,9 @@ import com.parse.SaveCallback;
 import java.util.List;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+import models.Handyman;
 import models.Landlord;
+import models.Quote;
 import models.WorkOrder;
 
 public class WorkOrderAdapter extends RecyclerView.Adapter<WorkOrderAdapter.ViewHolder> {
@@ -69,6 +71,7 @@ public class WorkOrderAdapter extends RecyclerView.Adapter<WorkOrderAdapter.View
         private TextView tvStatus;
         private Button btnDeleteWorkOrder;
         private Button btnMoreInfo;
+        private Button btnResolveWorkOrder;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -77,6 +80,7 @@ public class WorkOrderAdapter extends RecyclerView.Adapter<WorkOrderAdapter.View
             tvStatus = itemView.findViewById(R.id.tvStatus);
             btnDeleteWorkOrder = itemView.findViewById(R.id.btnDeleteWorkOrder);
             btnMoreInfo = itemView.findViewById(R.id.btnMoreInfo);
+            btnResolveWorkOrder = itemView.findViewById(R.id.btnResolveWorkOrder);
         }
 
         public void bind(WorkOrder workOrder, ParseObject role, Context context, HomeFragment fragment) {
@@ -91,41 +95,40 @@ public class WorkOrderAdapter extends RecyclerView.Adapter<WorkOrderAdapter.View
                 Glide.with(context).load(image.getUrl()).transform(new CenterCrop(), new RoundedCornersTransformation(radius, margin))
                         .into(ivPicture);
 
-
-            List<ParseObject> res = (List<ParseObject>) ParseUser.getCurrentUser().get("role");
-            res.get(0).fetchInBackground(new GetCallback<ParseObject>() {
+            if(role instanceof Landlord)
+                btnDeleteWorkOrder.setVisibility(View.VISIBLE);
+            else if(role instanceof Handyman && workOrder.getFinalQuote() != null && workOrder.getStatus() == false)
+                btnResolveWorkOrder.setVisibility(View.VISIBLE);
+            else
+            {
+                btnDeleteWorkOrder.setVisibility(View.INVISIBLE);
+                btnResolveWorkOrder.setVisibility(View.INVISIBLE);
+            }
+            btnDeleteWorkOrder.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void done(ParseObject object, ParseException e) {
+                public void onClick(View view) {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                    alert.setTitle("Are you sure you want to delete this work order?");
+                    alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
 
-                    if(res.get(0) instanceof Landlord) {btnDeleteWorkOrder.setVisibility(View.VISIBLE);}
+                            for(Quote q : workOrder.getQuotes())
+                                q.deleteInBackground();
 
-                    btnDeleteWorkOrder.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            AlertDialog.Builder alert = new AlertDialog.Builder(context);
-                            alert.setTitle("Are you sure you want to delete this work order?");
-
-                            alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int whichButton) {
-                                    workOrder.deleteInBackground(new DeleteCallback(){
-
-                                        @Override
-                                        public void done(ParseException e) {
-                                            int btnId = fragment.radioGroup.getCheckedRadioButtonId();
-                                            fragment.filterWorkorders(btnId);
-                                        }
-                                    });
+                            workOrder.deleteInBackground(new DeleteCallback(){
+                                @Override
+                                public void done(ParseException e) {
+                                    int btnId = fragment.radioGroup.getCheckedRadioButtonId();
+                                    fragment.filterWorkorders(btnId);
                                 }
                             });
-
-                            alert.setNegativeButton("Cancel",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {}
-                                    });
-
-                            alert.show();
                         }
                     });
+                    alert.setNegativeButton("Cancel",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {}
+                            });
+                    alert.show();
                 }
             });
             btnMoreInfo.setOnClickListener(new View.OnClickListener() {
@@ -137,7 +140,14 @@ public class WorkOrderAdapter extends RecyclerView.Adapter<WorkOrderAdapter.View
                     context.startActivity(intent);
                 }
             });
-
+            btnResolveWorkOrder.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    workOrder.setStatus(true);
+                    workOrder.saveInBackground();
+                    notifyDataSetChanged();
+                }
+            });
         }
     }
 }

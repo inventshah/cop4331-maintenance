@@ -11,6 +11,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.parse.GetCallback;
+import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -186,6 +187,13 @@ public class SignUpActivity extends AppCompatActivity {
         user.put("name", name);
         user.put("points", (double)0);
         user.put("role", role);
+
+        // TODO: testing acl persmissions
+        ParseACL acl = new ParseACL();
+        acl.setPublicWriteAccess(true);
+        acl.setPublicReadAccess(true);
+        user.setACL(acl);
+
         user.signUpInBackground(new SignUpCallback() {
             @Override
             public void done(ParseException e) {

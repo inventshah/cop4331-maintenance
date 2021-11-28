@@ -1,16 +1,10 @@
 package com.example.maintenanceapp;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ListAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,23 +14,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.baoyz.swipemenulistview.SwipeMenu;
-import com.baoyz.swipemenulistview.SwipeMenuCreator;
-import com.baoyz.swipemenulistview.SwipeMenuItem;
-import com.baoyz.swipemenulistview.SwipeMenuListView;
-import com.google.android.material.snackbar.Snackbar;
-import com.parse.DeleteCallback;
-import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
-import models.Quote;
-import models.WorkOrder;
+import models.*;
 
 public class ViewQuotesActivity extends AppCompatActivity {
 
@@ -64,7 +51,7 @@ public class ViewQuotesActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        getQuotes();
+        fetchQuotes();
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(rvQuotes);
     }
@@ -79,23 +66,58 @@ public class ViewQuotesActivity extends AppCompatActivity {
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             int position = viewHolder.getAdapterPosition();
             switch (direction) {
+
+                // Deleting Quotes
                 case ItemTouchHelper.LEFT:
                     Quote quote = allQuotes.get(position);
                     allQuotes.remove(position);
                     adapter.notifyDataSetChanged();
-                    quote.deleteInBackground(new DeleteCallback() {
-                        @Override
-                        public void done(ParseException e) {
-                        }
-                    });
+                    quote.deleteInBackground();
                     workOrder.setQuotes(allQuotes);
                     workOrder.saveInBackground();
                     break;
+
+                // Approving Quote
                 case ItemTouchHelper.RIGHT:
-                    for (int i = 0; i < allQuotes.size(); i++) {
-                        if (i != position)
-                            allQuotes.remove(allQuotes.get(i));
-                    }
+
+                    // Remove all other quotes, keep only the approved quote
+                    Quote approvedQuote = allQuotes.get(position);
+                    for(Quote q : allQuotes)
+                        if(!q.equals(approvedQuote))
+                            q.deleteInBackground();
+                    allQuotes.clear();
+                    allQuotes.add(approvedQuote);
+                    adapter.notifyDataSetChanged();
+
+                    // Set final quote for workorder and set the corresponding handyman that is going
+                    // to fix the issue
+                    workOrder.setQuotes(allQuotes);
+                    workOrder.setFinalQuote(approvedQuote);
+                    workOrder.setHandyman(approvedQuote.getHandyman());
+                    workOrder.saveInBackground();
+
+                    // Give points to tenant, since workorder has been approved and assigned a
+                    // handyman
+                    workOrder.getTenant().fetchInBackground(new GetCallback<ParseObject>() {
+                        @Override
+                        public void done(ParseObject tenant, ParseException e) {
+                            ((Tenant) tenant).getUser().fetchInBackground(new GetCallback<ParseObject>() {
+                                @Override
+                                public void done(ParseObject user, ParseException e) {
+                                    if(e != null)
+                                    {
+                                        Log.e("Error", e.getMessage());
+                                        return;
+                                    }
+                                    double points =  user.getNumber("points").doubleValue();
+                                    Log.i("Points", ""+points +"" + (points+1.0));
+                                    user.put("points", points+1);
+                                    //user.increment("points");
+                                    user.saveInBackground();
+                                }
+                            });
+                        }
+                    });
                     onBackPressed();
                     break;
             }
@@ -123,7 +145,7 @@ public class ViewQuotesActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.idle,R.anim.to_bottom);
     }
 
-    public void getQuotes()
+    public void fetchQuotes()
     {
         ParseQuery<WorkOrder> query = new ParseQuery<>(WorkOrder.class);
         query.whereEqualTo("objectId", workOrder.getObjectId());
@@ -137,9 +159,8 @@ public class ViewQuotesActivity extends AppCompatActivity {
                     return;
                 }
                 allQuotes.clear();
-                for (Quote q: wo.getQuotes()) {
+                for (Quote q: wo.getQuotes())
                     allQuotes.add(q);
-                }
                 adapter.notifyDataSetChanged();
             }
         });

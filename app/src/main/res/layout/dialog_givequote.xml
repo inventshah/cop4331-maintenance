@@ -6,27 +6,33 @@
     android:padding="10dp">
 
     <TextView
+        android:id="@+id/tvAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Enter Quote Amount:"/>
+        android:text="Enter an amount:"
+        />
 
     <EditText
         android:id="@+id/dialogGiveQuote_etAmount"
         android:inputType="numberDecimal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="00.00"/>
+        android:hint="00.00"
+       />
 
     <TextView
+        android:id="@+id/tvCompletionDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Enter Scheduled Completion Date:"/>
+        android:text="Enter Scheduled Completion Date:"
+        />
 
     <EditText
         android:id="@+id/dialogGiveQuote_etScheduledCompletion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="date"
-        android:hint="MM/DD/YYYY"/>
+        android:hint="MM/DD/YYYY"
+        />
 
 </LinearLayout>

@@ -33,7 +33,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import models.*;
-// TODO implement refresh page feature, and Handyman multiple landlord registration
 
 public class HomeFragment extends Fragment {
 
@@ -47,7 +46,7 @@ public class HomeFragment extends Fragment {
     ParseObject role;
 
     public HomeFragment() {/* Required empty public constructor*/}
-    // TODO add newWObtn to toolbar radiogroup
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -104,28 +103,46 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         role = (ParseObject) this.getActivity().getIntent().getExtras().get("role");
+
         // Inflate the layout for this fragment
-
-        if (role instanceof Tenant) {
+        if (role instanceof Tenant)
             return inflater.inflate(R.layout.fragment_home_tenant, container, false);
-        }
-        else if (role instanceof Landlord) {
+        else if (role instanceof Landlord)
             return inflater.inflate(R.layout.fragment_home_landlord, container, false);
-        }
-        else {
+        else
             return inflater.inflate(R.layout.fragment_home_handyman, container, false);
-        }
-
     }
 
     public void filterWorkorders(int buttonId) {
         ParseQuery<WorkOrder> query = new ParseQuery<WorkOrder>(WorkOrder.class);
+        adapter.notifyDataSetChanged();
         if (role instanceof Handyman) {
-            if (buttonId == radioToDo.getId())
+
+            // Get all workorders that are not completed under handyman's landlord(s) properties
+            if(buttonId == radioPending.getId())
+            {
                 query.whereEqualTo("status", false);
-            else query.whereEqualTo("status",true);
+                query.whereDoesNotExist("handyman");
+                query.whereContainedIn("landlord", ((Handyman) role).getLandlords());
+            }
+
+            // Get all workorders that assigned to be completed by current handyman
+            else if (buttonId == radioToDo.getId())
+            {
+                query.whereEqualTo("status", false);
+                query.whereEqualTo("handyman", role);
+            }
+
+            // Get all completed workorders, completed by the current handyman
+            else {
+                query.whereEqualTo("status", true);
+                query.whereEqualTo("handyman", role);
+            }
+
         }
-        else {
+        // Get all workorders associated with each landlord or tenant respectively
+        else
+        {
             query.whereEqualTo(((role instanceof Tenant) ? "tenant" : "landlord"), role);
             if (buttonId == radioPending.getId())
                 query.whereDoesNotExist("handyman");
@@ -134,7 +151,8 @@ public class HomeFragment extends Fragment {
                 query.whereExists("handyman");
                 query.whereEqualTo("status", false);
             }
-            else query.whereEqualTo("status",true);
+            else
+                query.whereEqualTo("status",true);
         }
         query.findInBackground(new FindCallback<WorkOrder>() {
             @Override
@@ -143,11 +161,9 @@ public class HomeFragment extends Fragment {
                     Log.e("Error", e.getMessage());
                     return;
                 }
-
                 allWorkOrders.clear();
                 for (WorkOrder wo: workOrders)
                     allWorkOrders.push(wo);
-
                 adapter.notifyDataSetChanged();
             }
         });

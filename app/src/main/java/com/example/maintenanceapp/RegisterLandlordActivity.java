@@ -1,5 +1,6 @@
 package com.example.maintenanceapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
@@ -15,6 +16,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.List;
 
@@ -56,8 +58,20 @@ public class RegisterLandlordActivity extends AppCompatActivity {
                             {
                                 landlords.add(object);
                                 ((Handyman) role).setLandlords(landlords);
-                                role.saveInBackground();
-                                etlandlordKey.setText("");
+                                role.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        if(e == null)
+                                        {
+                                            etlandlordKey.setText("");
+                                            MainActivity.bottomNavigationView.setSelectedItemId(R.id.action_home);
+                                            goMainActivity();
+                                            finish();
+                                        }
+                                        else
+                                            Log.e("Error", e.getMessage());
+                                    }
+                                });
                             }
                             else
                                 Log.e("Error", e.getMessage());
@@ -66,5 +80,18 @@ public class RegisterLandlordActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+    private void goMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        List<ParseObject> res = (List<ParseObject>) ParseUser.getCurrentUser().get("role");
+        res.get(0).fetchInBackground(new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject object, ParseException e) {
+                intent.putExtra("role", res.get(0));
+                startActivity(intent);
+                finish();
+            }
+        });
+
     }
 }
