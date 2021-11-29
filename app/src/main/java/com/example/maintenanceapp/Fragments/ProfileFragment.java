@@ -61,7 +61,6 @@ public class ProfileFragment extends Fragment {
     ParseObject role;
     private TextView tvFullName;
     private TextView tvUsername;
-    private TextView tvEmail;
     private TextView tvPoints;
     private ImageView ivProfilePicture;
     private TextView tvLandlordKey;
@@ -82,7 +81,6 @@ public class ProfileFragment extends Fragment {
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.profile_toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         tvUsername = view.findViewById(R.id.tvProfileUsername);
-        tvEmail = view.findViewById(R.id.tvEmail);
         tvFullName = view.findViewById(R.id.tvNameOfUser);
         tvPoints = view.findViewById(R.id.tvPoints);
         ivProfilePicture = view.findViewById(R.id.ivProfilePicture);
@@ -91,10 +89,8 @@ public class ProfileFragment extends Fragment {
         tvLandlordKey = view.findViewById(R.id.tvLandlordKey);
         swipeContainer = view.findViewById(R.id.swipeContainerProfile);
         tvUsername.setText("@" +ParseUser.getCurrentUser().getUsername());
-        tvEmail.setText(ParseUser.getCurrentUser().getEmail());
         tvFullName.setText(ParseUser.getCurrentUser().getString("name"));
         tvPoints.setText("Points: "+(Math.round(role.getDouble("points")*100.0)/100.0));
-        tvEmail.setText(ParseUser.getCurrentUser().getString("email"));
 
         ivProfilePicture.setOnClickListener(new View.OnClickListener() {
             @Override

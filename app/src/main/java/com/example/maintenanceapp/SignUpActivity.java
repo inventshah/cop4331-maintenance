@@ -205,18 +205,18 @@ public class SignUpActivity extends AppCompatActivity {
         role.get(0).put("points", 0);
         ParseUser user = new ParseUser();
 
-        // convert drawable file to byte bitmap then byte array
-        ParseFile file;
-        Drawable d = getResources().getDrawable(R.drawable.ic_baseline_person_24);
-        Bitmap bitmap = convertToBitmap(d);
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-        byte[] bitmapdata = stream.toByteArray();
-
-        // Create the ParseFile
-        file = new ParseFile("profilePicture", bitmapdata);
-        file.saveInBackground();
-        user.put("profilePic",file);
+//        // convert drawable file to byte bitmap then byte array
+//        ParseFile file;
+//        Drawable d = getResources().getDrawable(R.drawable.ic_baseline_person_24);
+//        Bitmap bitmap = convertToBitmap(d);
+//        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+//        byte[] bitmapdata = stream.toByteArray();
+//
+//        // Create the ParseFile
+//        file = new ParseFile("profilePicture", bitmapdata);
+//        file.saveInBackground();
+//        user.put("profilePic",file);
 
 
         ParseQuery<ParseUser> query = new ParseQuery<ParseUser>(ParseUser.class);

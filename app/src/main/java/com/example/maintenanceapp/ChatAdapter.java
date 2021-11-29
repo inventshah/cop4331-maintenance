@@ -64,30 +64,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
         return message.getUserId() != null && message.getUserId().equals(mUserId);
     }
 
-    public void addItem(Message m) {
-        this.mMessages.add(m);
-        notifyItemInserted(mMessages.size() - 1);
-    }
-
-    public void removeItem(Message m) {
-        for (int i = 0; i < mMessages.size(); i++) {
-            if (mMessages.get(i).getObjectId().equals(m.getObjectId())){
-                mMessages.remove(i);
-                notifyItemRemoved(i);
-                notifyItemRangeChanged(i, mMessages.size());
-                return;
-            }
-        }
-    }
-    public void updateItem(Message m) {
-        for (int i = 0; i < mMessages.size(); i++) {
-            if (mMessages.get(i).getObjectId().equals(m.getObjectId())){
-                mMessages.set(i,m);
-                notifyDataSetChanged();
-                return;
-            }
-        }
-    }
 
 //    private static void getProfileUrl(final String userId, ImageView ivProfilePic) {
 //        ParseQuery<ParseUser> query = ParseUser.getQuery();

@@ -32,19 +32,10 @@
         android:text="username"/>
 
     <TextView
-        android:id="@+id/tvEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvProfileUsername"
-        android:layout_centerInParent="true"
-        android:text="email"
-        android:layout_marginTop="7dp"/>
-
-    <TextView
         android:id="@+id/tvPoints"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvEmail"
+        android:layout_below="@id/tvProfileUsername"
         android:layout_centerInParent="true"
         android:text=""
         android:layout_marginTop="7dp"/>

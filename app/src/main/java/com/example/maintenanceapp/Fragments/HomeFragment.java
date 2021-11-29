@@ -100,6 +100,7 @@ public class HomeFragment extends Fragment {
                 swipeContainer.setRefreshing(false);
             }
         });
+        if (!(role instanceof Tenant))
         ivMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

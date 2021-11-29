@@ -59,30 +59,7 @@ public class ConversationMenuAdapter extends RecyclerView.Adapter<ConversationMe
         return conversationPreviews.size();
     }
 
-    public void addItem(Conversation c) {
-        this.conversationPreviews.add(c);
-        notifyItemInserted(conversationPreviews.size() - 1);
-    }
 
-    public void removeItem(Conversation c) {
-        for (int i = 0; i < conversationPreviews.size(); i++) {
-            if (conversationPreviews.get(i).getObjectId().equals(c.getObjectId())){
-                conversationPreviews.remove(i);
-                notifyItemRemoved(i);
-                notifyItemRangeChanged(i, conversationPreviews.size());
-                return;
-            }
-        }
-    }
-    public void updateItem(Conversation c) {
-        for (int i = 0; i < conversationPreviews.size(); i++) {
-            if (conversationPreviews.get(i).getObjectId().equals(c.getObjectId())){
-                conversationPreviews.set(i,c);
-                notifyDataSetChanged();
-                return;
-            }
-        }
-    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
