@@ -37,7 +37,7 @@ public class ChatActivity extends AppCompatActivity {
     public static final String KEY_SENT_TO = "sentTo";
     static final String TAG = ChatActivity.class.getSimpleName();
     static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
-    static final long POLL_INTERVAL = TimeUnit.SECONDS.toMillis(3);
+    static final long POLL_INTERVAL = TimeUnit.SECONDS.toMillis(1);
     private EditText etMessage;
     private ImageButton ibSend;
     private RecyclerView rvChat;
@@ -45,7 +45,6 @@ public class ChatActivity extends AppCompatActivity {
     private boolean mFirstLoad;
     private ChatAdapter mAdapter;
     ParseUser recipient;
-    SubscriptionHandling subscriptionHandling;
 
     private Handler myHandler = new android.os.Handler();
     Runnable mRefreshMessagesRunnable = new Runnable() {
@@ -57,72 +56,14 @@ public class ChatActivity extends AppCompatActivity {
     };
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-//        subscriptionHandling.handleUnsubscribe(new SubscriptionHandling.HandleUnsubscribeCallback() {
-//            @Override
-//            public void onUnsubscribe(ParseQuery query) {
-//
-//            }
-//        });
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-//        subscriptionHandling.handleUnsubscribe(new SubscriptionHandling.HandleUnsubscribeCallback() {
-//            @Override
-//            public void onUnsubscribe(ParseQuery query) {
-//
-//            }
-//        });
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         recipient = getIntent().getParcelableExtra(KEY_RECIPIENT);
+        startWithCurrentUser();
 
-//        ParseLiveQueryClient parseLiveQueryClient = ParseLiveQueryClient.Factory.getClient();
-//        ParseQuery<ParseObject> query = new ParseQuery<>("Message");
-//        //query.whereEqualTo(Message.SENT_TO_KEY, ParseUser.getCurrentUser());
-//        subscriptionHandling = parseLiveQueryClient.subscribe(query);
-//        subscriptionHandling.handleSubscribe(new SubscriptionHandling.HandleSubscribeCallback() {
-//            @Override
-//            public void onSubscribe(ParseQuery query) {
-//                subscriptionHandling.handleEvent(SubscriptionHandling.Event.CREATE, new SubscriptionHandling.HandleEventCallback() {
-//                    @Override
-//                    public void onEvent(ParseQuery query, ParseObject object) {
-//                        ChatActivity.this.runOnUiThread(() -> {
-//                            mAdapter.addItem((Message)object);
-//                        });
-//                    }
-//                });
-//            }
-//        });
-
-        // User login
-        if (ParseUser.getCurrentUser() != null) { // start with existing user
-            startWithCurrentUser();
-        } else { // If not logged in, login as a new anonymous user
-            login();
-        }
     }
 
-    // Create an anonymous user using ParseAnonymousUtils and set sUserId
-    void login() {
-        ParseAnonymousUtils.logIn(new LogInCallback() {
-            @Override
-            public void done(ParseUser user, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Anonymous login failed: ", e);
-                } else {
-                    startWithCurrentUser();
-                }
-            }
-        });
-    }
 
     // Get the userId from the cached currentUser object
     void startWithCurrentUser() {

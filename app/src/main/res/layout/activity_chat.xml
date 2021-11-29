@@ -29,7 +29,7 @@
             android:layout_alignBottom="@+id/ibSend"
             android:layout_toLeftOf="@+id/ibSend"
             android:gravity="top"
-            android:hint="hint"
+            android:hint="Say something"
             android:imeOptions="actionSend"
             android:inputType="textShortMessage"
             android:minHeight="48dp" />
