@@ -43,6 +43,7 @@ public class ShowWorkOrderActivity extends AppCompatActivity {
     private TextView tvTenant;
     private TextView tvDescription;
     private TextView tvLocation;
+    private TextView tvLandlord;
     private Button btnGeneric;
 
     @Override
@@ -57,18 +58,31 @@ public class ShowWorkOrderActivity extends AppCompatActivity {
         tvLocation = findViewById(R.id.detailedWO_tvLocation);
         btnGeneric = findViewById(R.id.detailedWO_btnGeneric);
         tvDescription = findViewById(R.id.detailedWO_tvDescription);
+        tvLandlord = findViewById(R.id.tvLandlordDetails);
         tvTitle.setText(workOrder.getTitle());
         setTenantName();
         tvDescription.setText(workOrder.getDescription());
         tvLocation.setText(workOrder.getLocation());
         ParseFile image = workOrder.getAttachment();
+        workOrder.getLandlord().fetchInBackground(new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject landlord, ParseException e) {
+                ((Landlord) landlord).getUser().fetchInBackground(new GetCallback<ParseObject>() {
+                    @Override
+                    public void done(ParseObject user, ParseException e) {
+                        tvLandlord.setText(user.getString("name"));
+                    }
+                });
+            }
+        });
+
 
         if (image != null)
             Glide.with(getBaseContext()).load(image.getUrl()).transform(new CenterCrop(), new RoundedCornersTransformation(35, 0))
                     .into(ivImage);
 
         // Set Tenant giveRating btn to visible
-        if(role instanceof Tenant && workOrder.getHandyman() != null && workOrder.getStatus() && workOrder.getRating() != 0)
+        if(role instanceof Tenant && workOrder.getHandyman() != null && workOrder.getStatus() && workOrder.getRating() == 0)
             btnGeneric.setVisibility(View.VISIBLE);
 
         // Set Handyman giveQuote btn to visible or Landlord viewQuotes btn to visible

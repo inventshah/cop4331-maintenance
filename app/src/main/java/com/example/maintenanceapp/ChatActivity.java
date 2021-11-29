@@ -61,9 +61,7 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
         recipient = getIntent().getParcelableExtra(KEY_RECIPIENT);
         startWithCurrentUser();
-
     }
-
 
     // Get the userId from the cached currentUser object
     void startWithCurrentUser() {
@@ -171,8 +169,6 @@ public class ChatActivity extends AppCompatActivity {
                 message.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        Toast.makeText(ChatActivity.this, "Successfully created message on Parse",
-                                Toast.LENGTH_SHORT).show();
                         refreshMessages();
                     }
                 });

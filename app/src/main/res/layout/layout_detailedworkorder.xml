@@ -76,12 +76,30 @@
         android:layout_marginStart="10dp"
         android:text="tenant"/>
 
+    <TextView
+        android:id="@+id/tvLandlordLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/detailedWO_tvTenant"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:text="Landlord:"/>
+
+    <TextView
+        android:id="@+id/tvLandlordDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvLandlordLabel"
+        android:layout_marginStart="10dp"
+        android:text="landlord"/>
+
     <Button
         android:id="@+id/detailedWO_btnGeneric"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="button"
-        android:layout_below="@id/detailedWO_tvTenant"
+        android:layout_below="@id/tvLandlordDetails"
         android:layout_centerHorizontal="true"
         android:visibility="invisible"
         android:background="@drawable/rounded_corners"/>
