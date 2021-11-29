@@ -1,5 +1,7 @@
 package com.example.maintenanceapp.Fragments;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -16,8 +18,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.maintenanceapp.LoginActivity;
 import com.example.maintenanceapp.R;
@@ -42,6 +46,7 @@ public class ProfileFragment extends Fragment {
     private TextView tvEmail;
     private TextView tvPoints;
     private TextView tvLandlordKey;
+    ImageButton btnCopyLandlordKey;
     Spinner spProfileOptions;
     public static final String TAG = "ProfileFragment";
     public ProfileFragment() {
@@ -59,6 +64,7 @@ public class ProfileFragment extends Fragment {
         tvEmail = view.findViewById(R.id.tvEmail);
         tvFullName = view.findViewById(R.id.tvNameOfUser);
         tvPoints = view.findViewById(R.id.tvPoints);
+        btnCopyLandlordKey = view.findViewById(R.id.btnCopyLandlordKey);
         spProfileOptions = view.findViewById(R.id.spProfileOptions);
         tvLandlordKey = view.findViewById(R.id.tvLandlordKey);
         tvUsername.setText(ParseUser.getCurrentUser().getUsername());
@@ -66,10 +72,23 @@ public class ProfileFragment extends Fragment {
         tvFullName.setText(ParseUser.getCurrentUser().getString("name"));
         tvPoints.setText("Points: "+(Math.round(role.getDouble("points")*100.0)/100.0));
 
+
         if (role instanceof Landlord)
         {
+            btnCopyLandlordKey.setVisibility(View.VISIBLE);
             tvLandlordKey.setVisibility(View.VISIBLE);
             tvLandlordKey.setText(((Landlord) role).getLandLordKey().toString());
+
+
+            btnCopyLandlordKey.setOnClickListener(v -> {
+
+                ClipboardManager clipboard = (ClipboardManager)getContext().getSystemService(getContext().CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("", tvLandlordKey.getText().toString());
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(getContext(), "Copied to clipboard!", Toast.LENGTH_LONG).show();
+
+            });
+
         }
 
         // Create and set array adapters for each spinner

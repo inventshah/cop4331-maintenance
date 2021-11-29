@@ -9,7 +9,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true">
+       android:layout_marginTop="50dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,9 +21,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sign Up"
+                android:textColor="#bd0909"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="30dp"
-                android:textSize="10pt"/>
+                android:textSize="13pt"/>
 
             <RadioGroup
                 android:id="@+id/radioRole"
@@ -37,39 +38,45 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
+                    app:buttonTint="@color/red"
                     android:text="Tenant" />
 
                 <RadioButton
                     android:id="@+id/radioLandlord"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Landlord" />
+                    app:buttonTint="@color/red"
+
+                    android:text="Landlord"
+                    android:buttonTint="@color/red"/>
 
                 <RadioButton
                     android:id="@+id/radioHandyman"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:buttonTint="@color/red"
+
                     android:text="Handyman" />
 
             </RadioGroup>
 
             <EditText
                 android:id="@+id/textName"
-                android:layout_width="200dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:hint="Full Name" />
 
             <EditText
                 android:id="@+id/textUsername"
-                android:layout_width="200dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:hint="Username" />
 
             <EditText
                 android:id="@+id/textPassword"
-                android:layout_width="200dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:hint="Password"
@@ -77,20 +84,23 @@
 
             <EditText
                 android:id="@+id/landlordKey"
-                android:layout_width="200dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:hint="LandLord Key"
                 android:inputType="textPassword"
                 android:layout_centerHorizontal="true"/>
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnSignup"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="100dp"
                 android:layout_gravity="center"
-                android:text="Signup"
+                android:text="Sign Up"
+                android:background="@drawable/rounded_corners"
+                android:textColor="@color/white"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp"/>
+                android:layout_marginTop="70dp"/>
 
         </LinearLayout>
 

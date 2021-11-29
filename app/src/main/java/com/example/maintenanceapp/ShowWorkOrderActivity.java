@@ -40,8 +40,9 @@ public class ShowWorkOrderActivity extends AppCompatActivity {
     WorkOrder workOrder;
     private TextView tvTitle;
     private ImageView ivImage;
-    private TextView tvStatus;
+    private TextView tvTenant;
     private TextView tvDescription;
+    private TextView tvLocation;
     private Button btnGeneric;
 
     @Override
@@ -52,12 +53,14 @@ public class ShowWorkOrderActivity extends AppCompatActivity {
         workOrder = (WorkOrder) getIntent().getExtras().get("workOrder");
         tvTitle = findViewById(R.id.detailedWO_tvTitle);
         ivImage= findViewById(R.id.detailedWO_ivImage);
-        tvStatus = findViewById(R.id.detailedWO_tvStatus);
+        tvTenant = findViewById(R.id.detailedWO_tvTenant);
+        tvLocation = findViewById(R.id.detailedWO_tvLocation);
         btnGeneric = findViewById(R.id.detailedWO_btnGeneric);
         tvDescription = findViewById(R.id.detailedWO_tvDescription);
         tvTitle.setText(workOrder.getTitle());
-        tvStatus.setText(workOrder.getStatus() ? "true" : "false");
+        setTenantName();
         tvDescription.setText(workOrder.getDescription());
+        tvLocation.setText(workOrder.getLocation());
         ParseFile image = workOrder.getAttachment();
 
         if (image != null)
@@ -212,7 +215,7 @@ public class ShowWorkOrderActivity extends AppCompatActivity {
     {
         boolean status = false;
         if (date.matches("^([0-9]{2}/[0-9]{2}/[0-9]{4}){1}$")) {
-            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
             dateFormat.setLenient(false);
             try {
                 dateFormat.parse(date);
@@ -223,5 +226,20 @@ public class ShowWorkOrderActivity extends AppCompatActivity {
             }
         }
         return status;
+    }
+
+    public void setTenantName()
+    {
+        workOrder.getTenant().fetchInBackground(new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject tenant, ParseException e) {
+                ((Tenant) tenant).getUser().fetchInBackground(new GetCallback<ParseObject>() {
+                    @Override
+                    public void done(ParseObject user, ParseException e) {
+                        tvTenant.setText(user.getString("name"));
+                    }
+                });
+            }
+        });
     }
 }

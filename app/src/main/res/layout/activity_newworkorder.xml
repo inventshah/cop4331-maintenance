@@ -3,65 +3,100 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="10dp">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tvText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
-        android:textSize="30sp"
-        android:layout_centerHorizontal="true"
-        android:text="Create new work order"/>
-
-    <EditText
-        android:id="@+id/etTitle"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvText"
-        android:hint="Title"/>
+        android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/etLocation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/etTitle"
-        android:hint="Location"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
 
-    <EditText
-        android:id="@+id/etDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Description"
-        android:layout_below="@id/etLocation"
-        android:inputType="textMultiLine"/>
+            <TextView
+                android:id="@+id/tvText"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="30dp"
+                android:text="Work Order Form"
+                android:textColor="@color/red"
+                android:textSize="30sp"/>
 
-    <ImageView
-        android:id="@+id/ivImagePreview"
-        android:layout_width="150dp"
-        android:layout_height="200dp"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/ic_baseline_image_24"
-        android:layout_below="@+id/etDescription"/>
+            <EditText
+                android:id="@+id/etTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvText"
+                android:layout_marginHorizontal="20dp"
+                android:hint="Give a title" />
 
-    <Button
-        android:id="@+id/btnTakePhoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/ivImagePreview"
-        android:text="Take Photo"/>
+            <EditText
+                android:id="@+id/etLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/etTitle"
+                android:layout_marginHorizontal="20dp"
+                android:hint="Location or Address"
+                android:lines="3"
+                android:maxLines="5"
+                android:gravity="top|left"
+                android:inputType="textMultiLine" />
 
-    <Button
-        android:id="@+id/btnSubmit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/btnTakePhoto"
-        android:text="Submit"/>
+            <EditText
+                android:id="@+id/etDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/etLocation"
+                android:layout_marginHorizontal="20dp"
+                android:inputType="textMultiLine"
+                android:lines="5"
+                android:maxLines="9"
+                android:gravity="top|left"
+                android:hint="Description" />
 
+            <ImageView
+                android:id="@+id/ivImagePreview"
+                android:layout_width="150dp"
+                android:layout_height="200dp"
+                android:layout_below="@+id/etDescription"
+                android:layout_marginStart="30dp"
+                android:padding="0dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/ic_baseline_image_24" />
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnTakePhoto"
+                android:layout_marginStart="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/etDescription"
+                android:layout_toEndOf="@id/ivImagePreview"
+                android:drawablePadding="6dp"
+                android:padding="15dp"
+                android:background="@drawable/alternate_gradient"
+                android:layout_marginTop="25dp"
+                android:drawableEnd="@drawable/ic_baseline_camera_alt_24"
+                android:textColor="@color/red"
+                android:text="Take Photo" />
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="80dp"
+                android:layout_below="@id/ivImagePreview"
+                android:textColor="@color/red"
+                android:background="@drawable/alternate_gradient"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="25dp"
+                android:text="Submit Work Order" />
+
+        </RelativeLayout>
+
+    </ScrollView>
 
 </RelativeLayout>

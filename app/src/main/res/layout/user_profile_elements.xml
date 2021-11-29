@@ -39,6 +39,7 @@
         android:layout_centerInParent="true"
         android:text="email"
         android:layout_marginTop="7dp"/>
+
     <TextView
         android:id="@+id/tvPoints"
         android:layout_width="wrap_content"
@@ -50,13 +51,28 @@
 
     <TextView
         android:id="@+id/tvLandlordKey"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvPoints"
-        android:layout_centerInParent="true"
-        android:text=""
+        android:layout_centerHorizontal="true"
+        android:text="landlordkey"
         android:layout_marginTop="7dp"
         android:visibility="invisible"
-        android:textIsSelectable="true"/>
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btnCopyLandlordKey"
+        android:layout_width="19dp"
+        android:layout_height="19dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="10dp"
+        android:layout_toStartOf="@id/tvLandlordKey"
+        android:background="@drawable/ic_baseline_content_copy_24"
+        android:layout_marginTop="7dp"
+        android:layout_below="@id/tvPoints"
+        android:visibility="invisible" />
     
 </RelativeLayout>

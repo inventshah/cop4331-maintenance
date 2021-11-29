@@ -10,6 +10,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseACL;
 import com.parse.ParseException;
@@ -23,6 +25,8 @@ import org.mindrot.jbcrypt.BCrypt;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 import models.Handyman;
 import models.Landlord;
 import models.Tenant;
@@ -112,7 +116,7 @@ public class SignUpActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    Log.e("Error",e.getMessage() != null ? e.getMessage() : "LandlordKey does not match");
+                    Log.e("Error", e != null ? e.getMessage() : "LandlordKey does not match");
                     Toast toast = Toast.makeText(getApplicationContext(),
                             "Failed Signed Up",
                             Toast.LENGTH_SHORT);
@@ -180,29 +184,47 @@ public class SignUpActivity extends AppCompatActivity {
         // Finish creating the ParseUser, because all required information is valid
         role.get(0).put("points", 0);
         ParseUser user = new ParseUser();
-        user.setUsername(username);
-        user.setPassword(password);
-        user.put("name", name);
-        user.put("role", role);
-        user.signUpInBackground(new SignUpCallback() {
+
+        ParseQuery<ParseUser> query = new ParseQuery<ParseUser>(ParseUser.class);
+        query.findInBackground(new FindCallback<ParseUser>() {
             @Override
-            public void done(ParseException e) {
-                if (e == null)
+            public void done(List<ParseUser> users, ParseException e) {
+                if (e != null) return;
+
+                // check for duplicate usernames
+                for (ParseUser user: users)
                 {
-                    // Put a reference to a ParseUser Object
-                    role.get(0).put("user", user);
-                    user.saveInBackground(new SaveCallback() {
-                        @Override
-                        public void done(ParseException e) {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Successfully Signed Up",
-                                    Toast.LENGTH_SHORT);
-                            toast.show();
-                            goMainActivity(role.get(0));
-                        }
-                    });
+                    if (user.getString("username").equals(username))
+                    {
+                        Toast.makeText(getApplicationContext(), "Username is taken",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                 }
-                else
-                    Log.e("Error", e.getMessage());
+                user.setUsername(username);
+                user.setPassword(password);
+                user.put("name", name);
+                user.put("role", role);
+                user.signUpInBackground(new SignUpCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null)
+                        {
+                            // Put a reference to a ParseUser Object
+                            role.get(0).put("user", user);
+                            user.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    Toast toast = Toast.makeText(getApplicationContext(), "Successfully Signed Up",
+                                            Toast.LENGTH_SHORT);
+                                    toast.show();
+                                    goMainActivity(role.get(0));
+                                }
+                            });
+                        }
+                        else
+                            Log.e("Error", e.getMessage());
+                    }
+                });
             }
         });
     }

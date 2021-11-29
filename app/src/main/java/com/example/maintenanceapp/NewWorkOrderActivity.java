@@ -18,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.example.maintenanceapp.Fragments.HomeFragment;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -29,6 +31,8 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import models.*;
 
 public class NewWorkOrderActivity extends AppCompatActivity
@@ -137,6 +141,7 @@ public class NewWorkOrderActivity extends AppCompatActivity
                 ivWorkOrderImage.setImageBitmap(takenImage);
                 ivWorkOrderImage.setMaxHeight(200);
                 ivWorkOrderImage.setMaxWidth(150);
+
 
             } else { // Result was a failure
                 Toast.makeText(getApplicationContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();

@@ -4,65 +4,99 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#AC3939"
-    android:backgroundTint="#03DF3434">
+    android:background="@color/white">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true">
+        android:layout_marginTop="60dp"
+        android:paddingLeft="30dp"
+        android:paddingEnd="30dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/ic_final_logo" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Maintenance App"
+                android:layout_marginBottom="10dp"
+                android:text="Hello There!"
                 android:textSize="30dp"
-                android:layout_marginBottom="30dp"/>
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Welcome"
+                android:textSize="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:text="Please sign in or create an account."
+                android:textSize="13dp"/>
 
             <EditText
                 android:id="@+id/Username"
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:drawableRight="@drawable/ic_baseline_person_24"
                 android:ems="10"
                 android:hint="Username"
                 android:inputType="textPersonName"
                 android:textColor="#757373"
-                android:textColorHint="#6C6767" />
+                android:textColorHint="#6C6767"
+                android:textSize="16dp" />
 
             <EditText
                 android:id="@+id/Password"
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="60dp"
+                android:drawableRight="@drawable/ic_baseline_lock_24"
                 android:ems="10"
                 android:hint="Password"
                 android:inputType="textPassword"
-                android:textColorHint="#635E5E"/>
+                android:textColorHint="#635E5E"
+                android:textSize="16dp" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/LoginBtn"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:textColor="@color/white"
+                android:background="@drawable/rounded_corners"
                 android:text="Login" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Or"
-                android:textSize="20dp"/>
+                android:text="or"
+                android:textSize="20dp" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/SignUpBtn"
-                android:layout_marginTop="20dp"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="SignUp" />
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="20dp"
+                android:background="@drawable/alternate_gradient"
+                android:textColor="@color/red"
+                android:text="Sign Up" />
 
         </LinearLayout>
 

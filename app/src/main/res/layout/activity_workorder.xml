@@ -21,6 +21,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
+            android:textSize="20dp"
+            android:layout_marginBottom="15dp"
+            android:textStyle="bold"
             android:text="Title" />
 
         <ImageView
@@ -30,22 +33,13 @@
             android:layout_below="@id/tvTitle"
             android:layout_centerHorizontal="true"
             android:background="@drawable/ic_baseline_image_24"
-            app:backgroundTint="@null"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tvStatus"
-            android:text="tvStatus"
-            android:layout_marginStart="5dp"
-            android:layout_below="@id/ivWorkOrderImage"
-            />
+            app:backgroundTint="@null" />
 
         <Button
             android:id="@+id/btnDeleteWorkOrder"
             android:layout_width="35dp"
             android:layout_height="39dp"
-            android:layout_below="@id/tvStatus"
+            android:layout_below="@id/ivWorkOrderImage"
             android:layout_alignParentEnd="true"
             android:background="@drawable/ic_baseline_delete_24"
             android:visibility="invisible"
@@ -55,7 +49,7 @@
             android:id="@+id/btnResolveWorkOrder"
             android:layout_width="39dp"
             android:layout_height="39dp"
-            android:layout_below="@id/tvStatus"
+            android:layout_below="@id/ivWorkOrderImage"
             android:layout_alignParentEnd="true"
             android:background="@drawable/ic_baseline_check_circle_outline_24"
             android:visibility="invisible"
@@ -63,14 +57,53 @@
 
         <Button
             android:id="@+id/btnMoreInfo"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentEnd="true"
             android:background="@drawable/ic_baseline_more_horiz_24"
             app:backgroundTint="@null"
             android:paddingHorizontal="0dp"
-            android:paddingVertical="0dp"
-             />
+            android:paddingVertical="0dp" />
+
+        <TextView
+            android:id="@+id/tvCompletionLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Scheduled Completion By:"
+            android:textSize="14dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/ivWorkOrderImage" />
+
+        <TextView
+            android:id="@+id/activityWorkOrder_tvCompletionDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14dp"
+            android:layout_below="@id/ivWorkOrderImage"
+            android:text="TBD"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/tvCompletionLabel" />
+
+        <TextView
+            android:id="@+id/tvQuoteLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/activityWorkOrder_tvCompletionDate"
+            android:text="Quote:"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dp"/>
+
+        <TextView
+            android:id="@+id/tvQuote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TBD"
+            android:layout_below="@id/activityWorkOrder_tvCompletionDate"
+            android:layout_toEndOf="@+id/tvQuoteLabel"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dp"/>
 
     </RelativeLayout>
 

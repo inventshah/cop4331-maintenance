@@ -14,27 +14,35 @@
             android:id="@+id/radioToolbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
 
             <RadioButton
                 android:id="@+id/rbPending"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:button="@drawable/pending_selector"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginRight="25dp"
+                android:button="@null"
+                android:background="@drawable/pending_selector"
                 android:checked="true"/>
 
             <RadioButton
                 android:id="@+id/rbToDo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:button="@drawable/todo_selector"
-                android:checked="true"/>
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginRight="25dp"
+                android:button="@null"
+                android:checked="true"
+                android:background="@drawable/todo_selector"
+                />
 
             <RadioButton
                 android:id="@+id/rbResolved"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:button="@drawable/resolved_selector" />
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginRight="25dp"
+                android:button="@null"
+                android:background="@drawable/resolved_selector"/>
 
         </RadioGroup>
 
@@ -42,7 +50,7 @@
             android:id="@+id/ivMessage"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:background="@drawable/ic_twotone_textsms_24"
+            android:background="@drawable/ic_baseline_mail_outline_24"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"/>

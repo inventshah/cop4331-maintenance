@@ -24,29 +24,35 @@
 
         <RadioGroup
             android:id="@+id/radioToolbar"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
 
             <RadioButton
                 android:id="@+id/rbPending"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:button="@drawable/pending_selector"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginRight="25dp"
+                android:button="@null"
+                android:background="@drawable/pending_selector"
                 android:checked="true"/>
 
             <RadioButton
                 android:id="@+id/rbApproved"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:button="@drawable/approved_selector" />
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginRight="25dp"
+                android:button="@null"
+                android:background="@drawable/approved_selector"/>
 
             <RadioButton
                 android:id="@+id/rbResolved"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:button="@drawable/resolved_selector" />
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginRight="25dp"
+                android:button="@null"
+                android:background="@drawable/resolved_selector"/>
 
         </RadioGroup>
 

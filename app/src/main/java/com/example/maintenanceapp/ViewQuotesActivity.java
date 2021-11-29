@@ -1,5 +1,6 @@
 package com.example.maintenanceapp;
 
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.util.Log;
@@ -110,8 +111,7 @@ public class ViewQuotesActivity extends AppCompatActivity {
                         }
                     });
 
-                    // TODO : do main activity instead
-                    onBackPressed();
+                    goMainActivity();
                     break;
             }
         }
@@ -155,6 +155,19 @@ public class ViewQuotesActivity extends AppCompatActivity {
                 for (Quote q: wo.getQuotes())
                     allQuotes.add(q);
                 adapter.notifyDataSetChanged();
+            }
+        });
+    }
+    private void goMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        List<ParseObject> res = (List<ParseObject>) ParseUser.getCurrentUser().get("role");
+        res.get(0).fetchInBackground(new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject object, ParseException e) {
+                intent.putExtra("role", res.get(0));
+                startActivity(intent);
+                finish();
             }
         });
     }

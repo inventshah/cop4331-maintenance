@@ -9,24 +9,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="Register a landlord"
+        android:text="Register Your Landlord"
+        android:layout_marginTop="30dp"
         android:textSize="25dp"/>
 
     <EditText
         android:id="@+id/registerLandlord_etLandlordKey"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
         android:layout_below="@id/tvTitle"
         android:layout_marginTop="50dp"
         android:layout_centerHorizontal="true"
         android:hint="Landlord Key"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnAddLandlord"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/red"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="300dp"
-        android:text="Add"/>
+        android:layout_marginTop="200dp"
+        android:background="@drawable/alternate_gradient"
+        android:text="Register"/>
 
 </RelativeLayout>

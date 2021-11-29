@@ -12,8 +12,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -24,16 +22,11 @@ import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
-import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 import java.util.List;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
-import models.Handyman;
-import models.Landlord;
-import models.Quote;
-import models.WorkOrder;
+import models.*;
 
 public class WorkOrderAdapter extends RecyclerView.Adapter<WorkOrderAdapter.ViewHolder> {
 
@@ -68,24 +61,27 @@ public class WorkOrderAdapter extends RecyclerView.Adapter<WorkOrderAdapter.View
 
         private TextView tvTitle;
         private ImageView ivPicture;
-        private TextView tvStatus;
         private Button btnDeleteWorkOrder;
         private Button btnMoreInfo;
         private Button btnResolveWorkOrder;
+        private TextView tvCompletionDate;
+        private TextView tvQuote;
+        private TextView tvQuoteLabel;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTitle);
             ivPicture = itemView.findViewById(R.id.ivWorkOrderImage);
-            tvStatus = itemView.findViewById(R.id.tvStatus);
             btnDeleteWorkOrder = itemView.findViewById(R.id.btnDeleteWorkOrder);
             btnMoreInfo = itemView.findViewById(R.id.btnMoreInfo);
             btnResolveWorkOrder = itemView.findViewById(R.id.btnResolveWorkOrder);
+            tvCompletionDate = itemView.findViewById(R.id.activityWorkOrder_tvCompletionDate);
+            tvQuote = itemView.findViewById(R.id.tvQuote);
+            tvQuoteLabel = itemView.findViewById(R.id.tvQuoteLabel);
         }
 
         public void bind(WorkOrder workOrder, ParseObject role, Context context, HomeFragment fragment) {
             tvTitle.setText(workOrder.getTitle());
-            tvStatus.setText(workOrder.getStatus() ? "true" : "false");
 
             int radius = 35; // corner radius, higher value = more rounded
             int margin = 0; // crop margin, set to 0 for corners with no crop
@@ -104,6 +100,33 @@ public class WorkOrderAdapter extends RecyclerView.Adapter<WorkOrderAdapter.View
                 btnDeleteWorkOrder.setVisibility(View.INVISIBLE);
                 btnResolveWorkOrder.setVisibility(View.INVISIBLE);
             }
+
+            if(workOrder.getFinalQuote() != null)
+            {
+                workOrder.getFinalQuote().fetchInBackground(new GetCallback<ParseObject>() {
+                    @Override
+                    public void done(ParseObject finalQuote, ParseException e) {
+                        tvCompletionDate.setText(((Quote) finalQuote).getDate());
+                        if(!(role instanceof Tenant))
+                        {
+                            tvQuote.setVisibility(View.VISIBLE);
+                            tvQuoteLabel.setVisibility(View.VISIBLE);
+                            tvQuote.setText("$"+((Quote) finalQuote).getAmount());
+                        }
+                    }
+                });
+            }
+            else
+            {
+                if(role instanceof Tenant)
+                {
+                    tvQuote.setVisibility(View.INVISIBLE);
+                    tvQuoteLabel.setVisibility(View.INVISIBLE);
+                }
+                tvQuote.setText("TBD");
+                tvCompletionDate.setText("TBD");
+            }
+
             btnDeleteWorkOrder.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

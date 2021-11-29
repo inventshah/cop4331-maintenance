@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.example.maintenanceapp.NewWorkOrderActivity;
 import com.example.maintenanceapp.R;
@@ -115,12 +116,13 @@ public class HomeFragment extends Fragment {
 
     public void filterWorkorders(int buttonId) {
         ParseQuery<WorkOrder> query = new ParseQuery<WorkOrder>(WorkOrder.class);
-        adapter.notifyDataSetChanged();
+
         if (role instanceof Handyman) {
 
             // Get all workorders that are not completed under handyman's landlord(s) properties
             if (buttonId == radioPending.getId())
             {
+                Toast.makeText(getContext(), "Pending WorkOrders", Toast.LENGTH_SHORT).show();
                 query.whereEqualTo("status", false);
                 query.whereDoesNotExist("handyman");
                 query.whereContainedIn("landlord", ((Handyman) role).getLandlords());
@@ -129,12 +131,14 @@ public class HomeFragment extends Fragment {
             // Get all workorders that assigned to be completed by current handyman
             else if (buttonId == radioToDo.getId())
             {
+                Toast.makeText(getContext(), "ToDo WorkOrders", Toast.LENGTH_SHORT).show();
                 query.whereEqualTo("status", false);
                 query.whereEqualTo("handyman", role);
             }
 
             // Get all completed workorders, completed by the current handyman
             else {
+                Toast.makeText(getContext(), "Resolved WorkOrders", Toast.LENGTH_SHORT).show();
                 query.whereEqualTo("status", true);
                 query.whereEqualTo("handyman", role);
             }
@@ -145,14 +149,23 @@ public class HomeFragment extends Fragment {
         {
             query.whereEqualTo(((role instanceof Tenant) ? "tenant" : "landlord"), role);
             if (buttonId == radioPending.getId())
+            {
+                Toast.makeText(getContext(), "Pending WorkOrders", Toast.LENGTH_SHORT).show();
                 query.whereDoesNotExist("handyman");
+            }
+
             else if (buttonId == radioApproved.getId())
             {
+                Toast.makeText(getContext(), "Approved WorkOrders", Toast.LENGTH_SHORT).show();
                 query.whereExists("handyman");
                 query.whereEqualTo("status", false);
             }
             else
+            {
+                Toast.makeText(getContext(), "Resolved WorkOrders", Toast.LENGTH_SHORT).show();
                 query.whereEqualTo("status",true);
+            }
+
         }
         query.findInBackground(new FindCallback<WorkOrder>() {
             @Override
