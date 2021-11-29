@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -143,10 +144,10 @@ public class ConversationMenuAdapter extends RecyclerView.Adapter<ConversationMe
                 public void done(ParseUser user, ParseException e) {
                     if (e == null) {
                         tvPreviewName.setText(user.getString("name"));
-                        //ParseFile profilePic = user.getParseFile(PostsAdapter.KEY_PROFILE_PIC);
-//                        if (profilePic != null) {
-//                            Glide.with(context).load(profilePic.getUrl()).apply(RequestOptions.circleCropTransform()).into(ivPreviewProfilePic);
-//                        }
+                        ParseFile profilePic = user.getParseFile("profilePic");
+                        if (profilePic != null) {
+                            Glide.with(context).load(profilePic.getUrl()).apply(RequestOptions.circleCropTransform()).into(ivPreviewProfilePic);
+                        }
                         tvPreviewLatestMessage.setText(convo.getRecentMessage());
                     }
                     else Log.i(TAG, "User's full name was not retrieved correctly");

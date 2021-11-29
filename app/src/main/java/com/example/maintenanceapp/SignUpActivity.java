@@ -1,6 +1,9 @@
 package com.example.maintenanceapp;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +18,7 @@ import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseACL;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -22,6 +26,7 @@ import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
@@ -157,16 +162,12 @@ public class SignUpActivity extends AppCompatActivity {
                     if (e == null)
                     {
                         role.add(handyman);
-
-
                         finishSignup(role, name, username, password);
                     }
                     else
                         Log.e("Error", e.getMessage());
                 }
             });
-
-
         }
     }
 
@@ -184,11 +185,39 @@ public class SignUpActivity extends AppCompatActivity {
         return hash;
     }
 
+    public Bitmap convertToBitmap(Drawable drawable) {
+        try {
+            Bitmap bitmap;
+            bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+            drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+            drawable.draw(canvas);
+            return bitmap;
+        } catch (OutOfMemoryError e) {
+            // Handle the error
+            return null;
+        }
+    }
+
     public void finishSignup(ArrayList<ParseObject> role, String name, String username, String password){
 
         // Finish creating the ParseUser, because all required information is valid
         role.get(0).put("points", 0);
         ParseUser user = new ParseUser();
+
+        // convert drawable file to byte bitmap then byte array
+        ParseFile file;
+        Drawable d = getResources().getDrawable(R.drawable.ic_baseline_person_24);
+        Bitmap bitmap = convertToBitmap(d);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] bitmapdata = stream.toByteArray();
+
+        // Create the ParseFile
+        file = new ParseFile("profilePicture", bitmapdata);
+        file.saveInBackground();
+        user.put("profilePic",file);
+
 
         ParseQuery<ParseUser> query = new ParseQuery<ParseUser>(ParseUser.class);
         query.findInBackground(new FindCallback<ParseUser>() {
