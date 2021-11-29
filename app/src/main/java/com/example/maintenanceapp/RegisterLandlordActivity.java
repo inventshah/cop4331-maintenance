@@ -20,6 +20,7 @@ import com.parse.SaveCallback;
 
 import java.util.List;
 
+import models.Conversation;
 import models.Handyman;
 import models.Landlord;
 import models.WorkOrder;
@@ -57,6 +58,18 @@ public class RegisterLandlordActivity extends AppCompatActivity {
                                 for(Landlord l :  ((Handyman) role).getLandlords())
                                     if(l.getObjectId().equals(landlord.getObjectId()))
                                         return;
+
+                                    Conversation conversation = new Conversation();
+                                    conversation.setUserOne(ParseUser.getCurrentUser().getObjectId());
+                                    landlord.getUser().fetchInBackground(new GetCallback<ParseObject>() {
+                                        @Override
+                                        public void done(ParseObject user, ParseException e) {
+                                            conversation.setUserTwo(user.getObjectId());
+                                            conversation.saveInBackground();
+                                        }
+                                    });
+
+
 
                                 landlords.add(landlord);
                                 ((Handyman) role).setLandlords(landlords);

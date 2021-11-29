@@ -24,5 +24,4 @@ public class Landlord extends ParseObject {
 
     public void setPoints(double points){put(KEY_POINTS, points);}
 
-
 }

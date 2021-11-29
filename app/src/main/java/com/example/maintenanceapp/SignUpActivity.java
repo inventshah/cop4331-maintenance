@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import models.Conversation;
 import models.Handyman;
 import models.Landlord;
 import models.Tenant;
@@ -156,12 +157,16 @@ public class SignUpActivity extends AppCompatActivity {
                     if (e == null)
                     {
                         role.add(handyman);
+
+
                         finishSignup(role, name, username, password);
                     }
                     else
                         Log.e("Error", e.getMessage());
                 }
             });
+
+
         }
     }
 
@@ -214,6 +219,7 @@ public class SignUpActivity extends AppCompatActivity {
                             user.saveInBackground(new SaveCallback() {
                                 @Override
                                 public void done(ParseException e) {
+
                                     Toast toast = Toast.makeText(getApplicationContext(), "Successfully Signed Up",
                                             Toast.LENGTH_SHORT);
                                     toast.show();

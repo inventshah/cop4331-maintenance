@@ -22,6 +22,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.maintenanceapp.ConversationMenuActivity;
 import com.example.maintenanceapp.NewWorkOrderActivity;
 import com.example.maintenanceapp.R;
 import com.example.maintenanceapp.WorkOrderAdapter;
@@ -38,6 +39,7 @@ import models.*;
 public class HomeFragment extends Fragment {
 
     Button newWorkOrderBtn;
+    ImageView ivMessage;
     private RecyclerView rvWorkOrders;
     public RadioGroup radioGroup;
     RadioButton radioPending, radioApproved, radioResolved, radioToDo;
@@ -64,6 +66,7 @@ public class HomeFragment extends Fragment {
         radioApproved = view.findViewById(R.id.rbApproved);
         radioResolved = view.findViewById(R.id.rbResolved);
         radioToDo = view.findViewById(R.id.rbToDo);
+        ivMessage = view.findViewById(R.id.ivMessage);
 
         filterWorkorders(radioGroup.getCheckedRadioButtonId());
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -95,6 +98,13 @@ public class HomeFragment extends Fragment {
             public void onRefresh() {
                 filterWorkorders(radioGroup.getCheckedRadioButtonId());
                 swipeContainer.setRefreshing(false);
+            }
+        });
+        ivMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), ConversationMenuActivity.class);
+                startActivity(intent);
             }
         });
     }

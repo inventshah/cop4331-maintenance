@@ -60,6 +60,8 @@
         <activity android:name=".ShowWorkOrderActivity"/>
         <activity android:name=".ViewQuotesActivity"/>
         <activity android:name=".LoginActivity"/>
+        <activity android:name=".ConversationMenuActivity"/>
+        <activity android:name=".ChatActivity"/>
     </application>
 
 </manifest>

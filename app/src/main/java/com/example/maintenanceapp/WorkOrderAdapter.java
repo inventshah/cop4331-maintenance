@@ -113,6 +113,11 @@ public class WorkOrderAdapter extends RecyclerView.Adapter<WorkOrderAdapter.View
                             tvQuoteLabel.setVisibility(View.VISIBLE);
                             tvQuote.setText("$"+((Quote) finalQuote).getAmount());
                         }
+                        else
+                        {
+                            tvQuote.setVisibility(View.INVISIBLE);
+                            tvQuoteLabel.setVisibility(View.INVISIBLE);
+                        }
                     }
                 });
             }

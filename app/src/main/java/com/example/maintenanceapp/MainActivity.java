@@ -9,6 +9,14 @@ import com.example.maintenanceapp.Fragments.HomeFragment;
 import com.example.maintenanceapp.Fragments.ProfileFragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.parse.Parse;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.livequery.ParseLiveQueryClient;
+import com.parse.livequery.SubscriptionHandling;
+
+import models.Message;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,6 +26,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+        // TODO : pass subscription to profiel to unsubsribe once logged out
         final FragmentManager fragmentManager = getSupportFragmentManager();
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

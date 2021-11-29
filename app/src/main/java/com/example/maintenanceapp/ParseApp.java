@@ -17,6 +17,8 @@ public class ParseApp extends Application {
         ParseObject.registerSubclass(Handyman.class);
         ParseObject.registerSubclass(Tenant.class);
         ParseObject.registerSubclass(Quote.class);
+        ParseObject.registerSubclass(Message.class);
+        ParseObject.registerSubclass(Conversation.class);
 
         // This sets up our Parse DB on the cloud,
         // Replace appId and clientKey with your own back4app account,
